@@ -1,0 +1,60 @@
+%copied from book.cls and makeidx.sty
+%and changed...
+
+\ProvidesPackage{myindex}
+                [1999/06/14 v0.1 Standard LaTeX package]
+
+
+\newcommand*{\indexcontentsline}{\addcontentsline{toc}{chapter}{%
+ \protect\numberline{}%
+Index}}
+
+
+\DeclareOption{nocontentsline}{%
+   \renewcommand{\indexcontentsline}{}
+}
+
+
+\ProcessOptions
+
+
+\renewenvironment{theindex}
+               {\if@twocolumn
+                  \@restonecolfalse
+                \else
+                  \@restonecoltrue
+                \fi
+                \columnseprule \z@
+                \columnsep 35\p@
+                \twocolumn%
+                [\@makeschapterhead{\vspace*{1em}\indexname}]
+                \@mkboth{\indexname}%
+                        {\indexname}%
+                \indexcontentsline
+                \thispagestyle{empty}\parindent\z@
+                \parskip\z@ \@plus .3\p@\relax
+                \let\item\@idxitem}
+               {\if@restonecol\onecolumn\else\clearpage\fi}
+
+\renewcommand\@idxitem{\par\hangindent 40\p@}
+\renewcommand\subitem{\@idxitem \hspace*{20\p@}}
+\renewcommand\subsubitem{\@idxitem \hspace*{30\p@}}
+\renewcommand\indexspace{\par \vskip 10\p@ \@plus5\p@
+\@minus3\p@\relax}
+
+
+\newcommand*\see[2]{\emph{\seename} #1}
+\newcommand*\printindex{\@input@{\jobname.ind}}
+\providecommand\seename{see}
+
+
+\newcommand*{\INDEX}[1]{\index{#1}}
+\newcommand*{\BF}[1]{\textbf{#1}}
+\newcommand*{\IT}[1]{\textit{#1}}
+
+
+\endinput
+
+%%
+%% End of file `myindex.sty'.
+{}

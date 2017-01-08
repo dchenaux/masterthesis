@@ -1,0 +1,233 @@
+%% ----------------------------------------------------------------
+%% Thesis.tex -- MAIN FILE (the one that you compile with LaTeX)
+%% ---------------------------------------------------------------- 
+
+%% Manual stuff todo at the end:
+% - put the URL addresses in the extra field of the bibtex file in \url{}
+% - delete the howpublished items from bibtex file
+% - identicon upper/lower case
+
+% Set up the document
+\documentclass[a4paper, 11pt, oneside]{thesis}  % Use the "Thesis" style, based on the ECS Thesis style by Steve Gunn
+\graphicspath{{figures/}}  % Location of the graphics files (set up for graphics to be in PDF format)
+
+% Microtype
+\usepackage[activate={true,nocompatibility},final,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
+% activate={true,nocompatibility} - activate protrusion and expansion
+% final - enable microtype; use "draft" to disable
+% tracking=true, kerning=true, spacing=true - activate these techniques
+% factor=1100 - add 10% to the protrusion amount (default is 1000)
+% stretch=10, shrink=10 - reduce stretchability/shrinkability (default is 20/20)
+
+% Include any extra LaTeX packages required
+\usepackage{makeidx}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{natbib}  % , sort&compress, sort&compress,authoryear, square, comma] Use the "Natbib" style for the references in the Bibliography
+\usepackage{verbatim}  % Needed for the "comment" environment to make LaTeX comments
+\usepackage{vector}  % Allows "\bvec{}" and "\buvec{}" for "blackboard" style bold vectors in maths
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{setspace}
+\definecolor{DarkGray}{RGB}{90,90,90}
+\definecolor{DarkDarkBlue}{RGB}{0,40,120}
+\definecolor{DarkBlue}{RGB}{40,80,150}
+\definecolor{DarkGreen}{RGB}{80,150,40}
+\definecolor{DarkRed}{RGB}{140,50,80}
+
+
+\usepackage[]{listings}
+\usepackage{pdfpages}
+\usepackage{varwidth}
+\usepackage[nopostdot,nonumberlist,numberedsection]{glossaries}
+\usepackage{tabularx}
+\usepackage{tabulary}
+
+\hypersetup{urlcolor=DarkDarkBlue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
+\setcounter{tocdepth}{2}
+\makeindex
+\makeglossaries
+
+\newglossaryentry{utc}{name=UTC, description={Coordinated Universal Time}}
+\newglossaryentry{adt}{name=ADT, description={Atlantic Daylight Time}}
+\newglossaryentry{est}{name=EST, description={Eastern Standard Time}}
+
+
+%% ----------------------------------------------------------------
+\begin{document}
+
+\frontmatter	  % Begin Roman style (i, ii, iii, iv...) page numbering
+\pagenumbering{arabic}
+% Set up the Title Page
+\title{Realtime data collection in IDEs}
+\authors  {\texorpdfstring
+            {\href{mailto:david.chenaux@unifr.ch}{David Chenaux}}
+            {David Chenaux}
+            }
+\addresses  {\groupname\\\deptname\\\univname}  % Do not change this here, instead these must be set in the "Thesis.cls" file, please look through it instead
+\date       {\today}
+\subject    {}
+\keywords   {}
+
+\def\chapterautorefname{Chapter}%
+\def\sectionautorefname{Section}%
+\def\subsectionautorefname{Subsection}%
+
+
+%% define special words
+\newcommand{\idname}{Moji-Identicon} 
+\newcommand{\idnames}{Moji-Identicons} 
+
+
+\maketitle
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % It is better to have smaller font and larger line spacing than the other way round
+
+% Define the page headers using the FancyHdr package and set up for one-sided printing
+\fancyhead{}  % Clears all page headers and footers
+\rhead{\thepage}  % Sets the right side header to show the page number
+\lhead{}  % Clears the left side page header
+
+\pagestyle{fancy}  % Finally, use the "fancy" page style to implement the FancyHdr headers
+
+%% ----------------------------------------------------------------
+
+% The Abstract Page
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+\setcounter{page}{2}
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+}
+
+\clearpage  % Abstract ended, start a new page
+%% ----------------------------------------------------------------
+% The "Funny Quote Page"
+\pagestyle{empty}  % No headers or footers for the following pages
+
+\null\vfill
+% Now comes the "Funny Quote", written in italics
+%\textit{``Another nice quote will be found to be here!!!''}
+
+\begin{flushright}
+%Lorem van Ipsum, The book\citep{wilkinson2005}
+\end{flushright}
+%\clearpage  % Funny Quote page ended, start a new page
+%% ----------------------------------------------------------------
+
+\setstretch{1.3}  % Reset the line-spacing to 1.3 for body text (if it has changed)
+
+% The Acknowledgements page, for thanking everyone
+\acknowledgements{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+%The environment of souls where I live in is what enabled and finally also formed this work.
+}
+\vfill\vfill\null
+\clearpage  % End of the Acknowledgements
+%% ----------------------------------------------------------------
+
+
+\pagestyle{fancy}  %The page style headers have been "empty" all this time, now use the "fancy" headers as defined before to bring them back
+
+%% ----------------------------------------------------------------
+\lhead{\emph{Contents}}  % Set the left side page header to "Contents"
+\tableofcontents  % Write out the Table of Contents
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Figures}}  % Set the left side page header to "List if Figures"
+\listoffigures  % Write out the List of Figures
+\clearpage  % End of the Acknowledgements
+
+%% ----------------------------------------------------------------
+\lhead{\emph{List of Tables}}  % Set the left side page header to "List of Tables"
+\listoftables  % Write out the List of Tables
+
+%% ----------------------------------------------------------------
+% End of the pre-able, contents and lists of things
+% Begin the Dedication page
+
+\setstretch{1.3}  % Return the line spacing back to 1.3
+
+%\pagestyle{empty}  % Page style needs to be empty for this page
+%\dedicatory{For/Dedicated to/To my\ldots}
+
+\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+
+
+%% ----------------------------------------------------------------
+\mainmatter	  % Begin normal, numeric (1,2,3...) page numbering
+\pagestyle{fancy}  % Return the page headers back to the "fancy" style
+% Include the chapters of the thesis, as separate files
+% Just uncomment the lines as you write the chapters
+\setcounter{page}{8}
+
+\input{./chapters/chapter1}
+
+\input{./chapters/chapter2}
+
+\input{./chapters/chapter3}
+
+\input{./chapters/chapter4}
+
+\input{./chapters/chapter5}
+
+\input{./chapters/chapter6}
+
+
+%% ----------------------------------------------------------------
+% Now begin the Appendices, including them as separate files
+
+
+\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
+
+
+%\input{./appendices/appendixA}	% Appendix Title
+
+\printglossaries
+
+\chapter{License of the software}
+\label{appendix:license}
+
+Copyright (c) 2016 DAVID CHENAUX
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+\clearpage
+
+\addtocontents{toc}{\vspace{2em}}  % Add a gap in the Contents, for aesthetics
+\backmatter
+
+%% ----------------------------------------------------------------
+\label{Bibliography}
+\lhead{\emph{Bibliography}}  % Change the left side page header to "Bibliography"
+\bibliographystyle{plainnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
+\bibliography{thesis}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+
+
+%% ----------------------------------------------------------------
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{chapter}{Index}
+%\label{Index}
+%\printindex
+
+
+\end{document}  % The End
+%% ----------------------------------------------------------------

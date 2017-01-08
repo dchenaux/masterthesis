@@ -1,0 +1,55 @@
+% Chapter 2
+
+
+\chapter{Related work}
+\label{chap:relatedwork}
+\lhead{Chapter 2. \emph{Related work}} % Write in your own chapter title to set the page header
+\begin{flushright}
+\textit{``Sharing is good, and with digital technology, sharing is easy.''} \\ Richard Stallman
+\end{flushright}
+
+As stated in the previous chapter, the goal of this thesis is to implement a dynamical program analysis system. In order to build a theoretical background, program analysis will be defined in this chapter along with the presentation of some available solutions and their restrictions.
+
+\section{What is Program Analysis ?} 
+Programming environments are an essential key for the acceptance and success of a programming language. After \cite{Ducasse1994}, without the appropriate developments and maintenance tools, programmers are likely to have a bad software understanding and therefore produce low-quality code. They will be therefore reluctant to use a language without appropriate programming environments, however powerful the programming language is.
+
+As already introduced in the previous chapter, program analysis is an automated process which aims to analyze the behavior of a software regarding a property such as correctness, robustness, safety and liveness. Program analysis can be separated in two methods : the \gls{spa} which is performed without running the software and the \gls{dpa} which is obviously fulfilled during runtime. \citep{Wikipedi2016}
+
+The \gls{spa} is a really simple solution because it does not require running the program for analyzing the dynamic behavior of a program. It consists in going through the source code and highlight coding errors or ensure conformance to coding guidelines. A classic example of static analysis would be a compiler which is capable of finding lexical, syntactic and even semantic mistakes. The main advantage of this method is that it allows to reason about all possible executions of a program and gives assurance about any execution, prior to deployment. 
+
+Nevertheless, according to \cite{Gosain2015}, since the widespread use of object oriented languages, \gls{spa} is found to be ineffective. This can be explained because of the usage of run-time features like dynamic binding, polymorphism, threads etc. To remedy this situation, developers call on \gls{dpa} which can, after \cite{Marek2015100}, gain insight into the dynamics and runtime behavior of those systems during execution. Because the runtime behavior depends on many other factors, such as program inputs, concurrency, scheduling decisions, and availability of resources, static analysis is not capable of retrieving those values. The following table, proposed by \cite{Gosain2015}, is resuming the main differences between static and dynamic analysis.
+
+\bigskip
+
+\begin{table}[htb]
+\begin{center}
+\begin{tabulary}{\textwidth}{CC}
+  \hline
+  Dynamic Analysis 	& Static Analysis \\\hline
+  Requires program to be executed	& Does not require program to be executed \\
+  More precise & Less precise \\
+  Holds for a particular execution & Holds for all the executions \\
+  Best suited to handle run-time programming lan & Lacks in handling run-time programming lan-\\
+guage features like polymorphism, dynamic bind & guage features.\\
+ing, threads etc. &  \\
+  Incurs large run-time overheads & Incurs less overheads \\\hline
+\end{tabulary}
+\end{center}
+\caption{Comparison of Dynamic analysis with Static Analysis}
+\label{list:survey}
+\end{table}
+
+\bigskip
+
+A relevant point deductible from this table, is that Dynamic Program Analysis is not replacing the static analysis, but on the contrary it is a complementary tool. Indeed, even if Static Program Analysis is not sufficient anymore, it gives nevertheless important information about the code for the programmer. The DPA is coming in a second phase when the SPA has been validated and the errors corrected. In the next section, some program analysis solution will be presented.
+
+\pagebreak
+
+\section{Program Analysis solutions}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+
+
+\section{Restrictions}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
