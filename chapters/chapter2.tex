@@ -41,15 +41,48 @@ ing, threads etc. &  \\
 
 \bigskip
 
-A relevant point deductible from this table, is that Dynamic Program Analysis is not replacing the static analysis, but on the contrary it is a complementary tool. Indeed, even if Static Program Analysis is not sufficient anymore, it gives nevertheless important information about the code for the programmer. The DPA is coming in a second phase when the SPA has been validated and the errors corrected. In the next section, some program analysis solution will be presented.
+A relevant point which comes out of this comparison, is that Dynamic Program Analysis is not replacing the Static Analysis, but on the contrary it is a complementary tool. Indeed, even if Static Program Analysis is not sufficient anymore, it gives nevertheless important information about the code for the programmer. The DPA is coming in a second phase when the SPA has been processed and the errors corrected. As it can be deduced, the main advantage of DPA is that it can examine the actual and exact run-time behavior of the program, whereas SPA main advantage is that it does not depend on input stimuli and can be generalized for all executions. To illustrate these differences, some program analysis solution will be presented further in this chapter.
 
 \pagebreak
 
-\section{Program Analysis solutions}
+\section{Program Analysis approaches}
+Now that a definition of Program Analysis has been established, some different approaches have to be exposed in order to fully understand the subject. Nevertheless as the field is really vast, it is not the aim to cover the entire subject. Yet the reading of this section should give a good overview to the reader. First, the main static analysis methods will be steered following logically with the dynamic analysis methods.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection{Static methods}
+
+The static methods are regrouped in four different categories proposed by \cite{Nielson2004} and presented here.
+
+\begin{description}
+  \item[Data Flow Analysis:] is a technique which consist in gathering information about the values and their evolution at each point of the program. In the Data Flow Analysis the program is considered as a graph in which the nodes are the elementary blocks and the edges describe how control might pass from one elementary block to another.
+  \item[Constrained Based Analysis:] or Control Flow Analysis, is a method which aims to know  which functions can be called at various points during the execution of a program.
+  \item[Abstract Interpretation:]
+  \item[Type and Effect Systems:]
+\end{description}
 
 
-\section{Restrictions}
+\subsection{Dynamic methods}
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\begin{description}
+  \item[Testing:]
+  \item[Monitoring:]
+  \item[Program slicing:] 
+\end{description}
+
+
+
+\section{Program Analysis tools}
+This section is dedicated to the available solutions in terms of program analysis. As it will be explained in the next chapter, the proof-to-concept system will be coded in \textit{Python} and therefore a special focus will be made on solutions available in this language. First, some Static Analysis solutions will be presentend following with the dynamic method ones.
+
+\subsection{SPA tools}
+One of the more complete and popular Static Program Analysis tool in python is PyLint.
+
+Instrumentation based
+VM Profiling based
+Aspect Oriented Programming
+
+\subsection{DPA tools}
+
+Pythontutor
+
+
+\section{Current restrictions}
