@@ -1,5 +1,9 @@
 % Chapter 2
-
+\newglossaryentry{vm}{name=VM, description={Virtual Machine}}
+\newglossaryentry{jpda}{name=JPDA, description={Java Platform Debugger Architecture}}
+\newglossaryentry{sdk}{name=SDK, description={Software Development Kit}}
+\newglossaryentry{pdb}{name=PDB, description={The Python Debugger}}
+\newglossaryentry{aop}{name=AOP, description={Aspect Oriented Programming}}
 
 \chapter{Related work}
 \label{chap:relatedwork}
@@ -46,39 +50,44 @@ A relevant point which comes out of this comparison, is that Dynamic Program Ana
 \pagebreak
 
 \section{Program Analysis approaches}
-Now that a definition of Program Analysis has been established, some different approaches have to be exposed in order to fully understand the subject. Nevertheless as the field is really vast, it is not the aim to cover the entire subject. Yet the reading of this section should give a good overview to the reader. First, the main static analysis methods will be steered following logically with the dynamic analysis methods.
+Now that a definition of Program Analysis has been established, some different approaches have to be exposed in order to fully understand the subject. Since the field is really vast, it is not the aim to cover the entire subject, but the reading of this section should give a good overview to the reader. First, the main static analysis methods will be steered following logically with the dynamic analysis methods.
 
 \subsection{Static methods}
 
-The static methods are regrouped in four different categories proposed by \cite{Nielson2004} and presented here.
+The static methods are regrouped in four different categories proposed by \cite{Nielson2004} and briefly presented here, some information was also gathered from the \cite{Wikipedi2016} page which is proposing a grouping based on the same criteria.
 
 \begin{description}
   \item[Data Flow Analysis:] is a technique which consist in gathering information about the values and their evolution at each point of the program. In the Data Flow Analysis the program is considered as a graph in which the nodes are the elementary blocks and the edges describe how control might pass from one elementary block to another.
-  \item[Constrained Based Analysis:] or Control Flow Analysis, is a method which aims to know  which functions can be called at various points during the execution of a program.
-  \item[Abstract Interpretation:]
-  \item[Type and Effect Systems:]
+  
+  \item[Constrained Based Analysis:] or Control Flow Analysis, aims to know which functions can be called at various points during the execution ; what "elementary blocks" may lead to what other "elementary blocks".
+  
+  \item[Abstract Interpretation:] consists in proving that the program semantics satisfies its specification according to \cite{Cousot2008}. What the program executions actually do should satisfying ,what the program executions are supposed to do. It can be explained as a partial execution of a program which gather information about its semantics without performing all the calculations.
+  
+  \item[Type and Effect Systems:] are two similar techniques. The first one is using types, which are a concise, formal description of the behavior of a program fragment. \cite{Remy2017} explains that programs must behave as prescribed by their types. Hence, types must be checked and ill-typed programs must be rejected. Effect systems can be described, after \cite{Nielson1999} as an extension of annotated type system where the typing judgments take the form of a combination of a type and an effect. This combination is associated with a program relative to a type environment.
 \end{description}
 
 
 \subsection{Dynamic methods}
 
+Now that the main static analysis methods have been defined in the preceding section, the dynamic methods will be exposed here. As it was already stated, dynamic analysis is a quite recent research field which status could be still defined as academical. Therefore the different techniques are not as well established as for the static analysis and can vary a lot in accordance with the author of the different papers. For this work, the following different method were selected which are proposed by \cite{Gosain2015} in their survey of Dynamic Program Analysis Techniques and Tools. 
+
 \begin{description}
-  \item[Testing:]
-  \item[Monitoring:]
-  \item[Program slicing:] 
+  \item[Instrumentation based approach:] needs a code instrumenter used as a pre-processor in order to inject instrumentation code into the target program. This can be done at three different stages : source code, binary code and bytecode. The first stage adds instrumentation code before the program is compiled, the second one adds it by modifying or re-writing compiled code and the last one performs tracing within the compiled code.
+  
+  \item[\gls{vm} Profiling based technique:] uses the profiling and debugging mechanism provided by the particular virtual machine, for example the \gls{jpda} for Java \gls{sdk} or the \gls{pdb} for Python. These profilers give an insight into the inner operations of a program, especially the memory and heap usage. To capture these profiling information plug-ins are available and can access the profiling services of the VM. Benchmarks are then usedfor actual run-time analysis which acts like a bloack-box test for a program. This process involves executing or simulating the behavior of the program while ccollecting data which is reflecting the performance. Unfortunately this technique has the drawback of generating high run-time overheads. 
+  
+  \item[Aspect Oriented Programming:] aims to increase modularity by allowing the separation of cross-cutting concerns. Because there is no need to add instrumentation code as the instrumentation facility is integrated within the programming language, the additional behavior is added to existing code without modifying the code itself. \gls{aop} adds the following constructs to a program : aspects, join-point, point-cuts and advices. These constructs can be considered like classes. Most popular languages have their aspect oriented extensions like AspectC++ and AspectJ. In python, there as some libraries who aims to reproduce AOP behavior but there isn't any canonical one. Actually there is a debate to what extent aspect oriented practices are useful or applicable to Python's dynamic nature. 
+  
 \end{description}
 
 
-
 \section{Program Analysis tools}
-This section is dedicated to the available solutions in terms of program analysis. As it will be explained in the next chapter, the proof-to-concept system will be coded in \textit{Python} and therefore a special focus will be made on solutions available in this language. First, some Static Analysis solutions will be presentend following with the dynamic method ones.
+This section is dedicated to the available solutions in terms of program analysis. As it will be explained in the next chapter, the proof-to-concept system will be coded in \textit{Python} and therefore a special focus will be made on solutions available in this language. As already exposed in this order, first, some Static Analysis solutions will be presented following with the dynamic method ones. 
 
 \subsection{SPA tools}
 One of the more complete and popular Static Program Analysis tool in python is PyLint.
 
-Instrumentation based
-VM Profiling based
-Aspect Oriented Programming
+Splint
 
 \subsection{DPA tools}
 
