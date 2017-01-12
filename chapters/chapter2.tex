@@ -4,6 +4,11 @@
 \newglossaryentry{sdk}{name=SDK, description={Software Development Kit}}
 \newglossaryentry{pdb}{name=PDB, description={The Python Debugger}}
 \newglossaryentry{aop}{name=AOP, description={Aspect Oriented Programming}}
+\newglossaryentry{libre}{name=Libre, description={or Free software, is distributed under terms that allow users to run the software for any purpose as well as to study, change, and distribute the software and any adapted versions.}}
+\newglossaryentry{jvmpi}{name=JVMPI, description={Java Virtual Machine Profiling Interface}}
+\newglossaryentry{jvmti}{name=JVMTI, description={Java Virtual Machine Tools Interface}}
+\newglossaryentry{smt}{name=SMT, description={Satisfiability Modulo Theories}}
+\newglossaryentry{ast}{name=AST, description={Abstract Syntax Tree}}
 
 \chapter{Related work}
 \label{chap:relatedwork}
@@ -74,24 +79,95 @@ Now that the main static analysis methods have been defined in the preceding sec
 \begin{description}
   \item[Instrumentation based approach:] needs a code instrumenter used as a pre-processor in order to inject instrumentation code into the target program. This can be done at three different stages : source code, binary code and bytecode. The first stage adds instrumentation code before the program is compiled, the second one adds it by modifying or re-writing compiled code and the last one performs tracing within the compiled code.
   
-  \item[\gls{vm} Profiling based technique:] uses the profiling and debugging mechanism provided by the particular virtual machine, for example the \gls{jpda} for Java \gls{sdk} or the \gls{pdb} for Python. These profilers give an insight into the inner operations of a program, especially the memory and heap usage. To capture these profiling information plug-ins are available and can access the profiling services of the VM. Benchmarks are then usedfor actual run-time analysis which acts like a bloack-box test for a program. This process involves executing or simulating the behavior of the program while ccollecting data which is reflecting the performance. Unfortunately this technique has the drawback of generating high run-time overheads. 
+  \item[\gls{vm} Profiling based technique:] uses the profiling and debugging mechanism provided by the particular virtual machine, for example the \gls{jpda} for Java \gls{sdk} or the \gls{pdb} for Python. These profilers give an insight into the inner operations of a program, especially the memory and heap usage. To capture these profiling information plug-ins are available and can access the profiling services of the VM. Benchmarks are then used for actual run-time analysis which acts like a block-box test for a program. This process involves executing or simulating the behavior of the program while collecting data which is reflecting the performance. Unfortunately this technique has the drawback of generating high run-time overheads. 
   
-  \item[Aspect Oriented Programming:] aims to increase modularity by allowing the separation of cross-cutting concerns. Because there is no need to add instrumentation code as the instrumentation facility is integrated within the programming language, the additional behavior is added to existing code without modifying the code itself. \gls{aop} adds the following constructs to a program : aspects, join-point, point-cuts and advices. These constructs can be considered like classes. Most popular languages have their aspect oriented extensions like AspectC++ and AspectJ. In python, there as some libraries who aims to reproduce AOP behavior but there isn't any canonical one. Actually there is a debate to what extent aspect oriented practices are useful or applicable to Python's dynamic nature. 
+  \item[Aspect Oriented Programming:] aims to increase modularity by allowing the separation of cross-cutting concerns. Because there is no need to add instrumentation code as the instrumentation facility is integrated within the programming language, the additional behavior is added to existing code without modifying the code itself. \gls{aop} adds the following constructs to a program : aspects, join-point, point-cuts and advices. These constructs can be considered like classes. Most popular languages have their aspect oriented extensions like AspectC++ and AspectJ. In python, there are some libraries who aims to reproduce AOP behavior but there isn't any canonical one. Actually there is a debate to what extent aspect oriented practices are useful or applicable to Python's dynamic nature. %
   
 \end{description}
 
 
 \section{Program Analysis tools}
-This section is dedicated to the available solutions in terms of program analysis. As it will be explained in the next chapter, the proof-to-concept system will be coded in \textit{Python} and therefore a special focus will be made on solutions available in this language. As already exposed in this order, first, some Static Analysis solutions will be presented following with the dynamic method ones. 
+This section is dedicated to the available solutions in terms of program analysis. As it will be explained in the next chapter, the proof-to-concept system will be coded in \textit{Python} and therefore an additional information will be given for solutions available in this language. As already exposed in this order, first, some Static Analysis solutions will be presented following with the dynamic method ones.
 
-\subsection{SPA tools}
-One of the more complete and popular Static Program Analysis tool in python is PyLint.
+\subsection{Static Analysis tools}
+Following, some of the most popular tools (commercial or free) for SPA are described, selected in widespread languages : Java, C/C++ and Python. The description are based on the official website of the tools and also on the \cite{Gomes2009} paper.
 
-Splint
+Starting with C/C++, \textbf{Splint} is a very well known tool, allowing to check for security vulnerabilities and coding mystakes. Splint is based on Lint and tries to minimize the efforts needed for its deployment. Additionally, with some annotation, Splint can extend its performances over Lint. Splint can among others detect : Dereferencing a possibly null pointer, Memory management errors including uses of dangling references and memory leaks, Problematic control flow such as likely infinite loops. \textbf{Astrée}, where as it is based on abstract interpretation, is analyzing safety-critical appli­cations written or gen­er­ated in C. It proves the absence of run-­time errors and invalid concurrent behavior for embedded applications as found in aeronautics, earth transportation, medical instrumentation, nuclear energy, and space flight. Another worth mentioning tool is the \textbf{PolySpace Verifer} tool developped by MathWorks who also created the famour Matlab software. 
 
-\subsection{DPA tools}
+Concerning Java, one recognized tool is Findbugs. With the advantage of being a \gls{libre} software, the tools uses a series of ad-hoc techniques designed to balance precision, efficiency and usability. FindBugs operates on Java bytecode, rather than source code. Another Libre software is \textbf{Checkstyle} which, as his names indicates it, allows to report any breach of standards in the source code. Finally a commercial tool, \textbf{Jtest} which is an integrated Development Testing solution, can perform Data-flow analysis Unit test-case generation and execution, static analysis, regression testing, runtime error detection, code review, and design by contract.
 
-Pythontutor
+In the Python world, \textbf{Pylint} is a coding standard checker which follows the style recommended by the PEP 8 specification. It is also capable of detecting coding errors and is integrable in IDEs. Speaking of IDEs, \textbf{PyCharm} includes also static analysis functions like PEP8 checks, testing assistance, smart refactorings, and a host of inspections.
+
+\subsection{Dynamic Analysis tools}
+
+As for the static tools, the most popular DPA tools are presented here. Following, a table proposed by \cite{Gosain2015} with an summary of some available DPA tools regrouped by technique. The table indicates the concerned language and also which type of dynamic Analysis is done by the tool.
+\begin{table}[htb]
+\begin{center}
+\begin{tabulary}{\textwidth}{L|L|L|C|C|C|C|C|C|C|C|C}
+\hline
+Technique             & Tool                      & Language             & \multicolumn{9}{c}{Type of Dynamic Analysis done}\\   
+\hline
+  & & & \rotatebox{90}{Cache Modelling} & \rotatebox{90}{Heap Allocation} & \rotatebox{90}{Buffer Overflow} & \rotatebox{90}{Memory Leak} & \rotatebox{90}{Deadlock Detection} & \rotatebox{90}{Race Detection} & \rotatebox{90}{Object LifeTime} & \rotatebox{90}{Metric Computation} & \rotatebox{90}{Invariant Detection} \\ 
+\hline
+                      & Daikon                    & C,C++                & & & & & & & & &\checkmark \\
+                      & Valgrind                  & C,C++                & & & &\checkmark& &\checkmark& & &\\
+Instr.Based           & Rational Purify           & {\tiny C, C++, Java} & & & &\checkmark& & & & & \\
+                      & {\tiny Parasoft Insure++} & C,C++                & &\checkmark& &\checkmark & & & & & \\
+                      & Pin                       & C                    &\checkmark & & & & & & & \\
+                      & Javana                    & Java                 &\checkmark& & & & & &\checkmark & &  \\
+                      & DIDUCE                    & Java                 & & & & & & & & &\checkmark  \\
+\hline
+AOP Based             & DJProf                    & Java                 & &\checkmark& & & & &\checkmark& & \\
+                      & Racer                     & Java                 & & & & & &\checkmark& & & \\
+\hline
+                      & Caffeine                  & Java                 & & & & & & &\checkmark&& \\
+VM Profiling          & DynaMetrics               & Java                 & & & & & & & &\checkmark& \\
+Based                 & *J                        & Java                 & & & & & & & &\checkmark& \\
+                      & JInsight                  & Java                 & & & &\checkmark&\checkmark& &\checkmark& & \\
+\hline
+\end{tabulary}
+\end{center}
+\caption{Dynamic Analysis Tools}
+\label{list:survey}
+\end{table}
+
+\textbf{Valgrind, Purify and Insure++} are instrumentation based and can automatically detect memory management and threading bugs among with profiling a program in details. While Valgrind is a instrumentation framework for building dynamic analysis tools, the two others are fully-fledged analysis software. \textbf{Javana} comes with an easy-to-use instrumentation framework so that only a few lines of instrumentation code need to be programmed for building powerful profiling tools. \textbf{Daikon} and \textbf{Diduce} are the most known tools for invariant detection and are respectively an offline and online tool. Last but not least, \textbf{Pin} is a dynamic binary instrumentation framework developed by Intel. It enables the creation of dynamic program analysis tools and can be used to observe low level events like memory references, instruction execution, and control flow as well as higher level abstractions such as procedure invocations, shared library loading, thread creation and system call execution.
+
+For AOP based tool, the two selected programs are \textbf{DjProf} and \textbf{Racer}. The first one is a profiler used for the analysis of heap usage and object life-time analysis and the second one is a data race detector tool for concurrent programs.  
+
+\textbf{*J} and \textbf{DynaMetrics} are two academical research projects about Virtual Machine profiling and are proposing solution for computing dynamic metrics for Java. The first one, proposed by \cite{Dufour2003}, relies on \gls{jvmpi}, while the second solution, from \cite{Singh2013}, relies on the new \gls{jvmti}. \textbf{JInsight} is for exploring run-time behaviour of Java programs visually and \textbf{Caffeine} helps to check conjectures about Java programs.
+
+In addition to this table, some Python tools are also available even if the field seems to not to be really well developed for this programming language. That could be explainable because of the dynamic nature of the language. This might be why the following tools are developed \textit{in} Python but not \textit{for} it. The first tool is \textbf{Angr} which is a python framework for analyzing binaries. It focuses on both static and dynamic instrumentation analysis, making it applicable to a variety of tasks. \textbf{Triton} is another binaries analyzer framework and proposes python bindings. Its main components are Dynamic Symbolic Execution engine, a Taint Engine, \gls{ast} representations of the x86 and the x86-64 instructions set semantics, \gls{smt} simplification passes, an SMT Solver Interface 
 
 
-\section{Current restrictions}
+\section{Dynamic Analysis limitations}
+
+As the DPA is a quite new research field, it induce ineluctably some drawbacks and limitations. The following table created by \cite{Gosain2015} gives a good overview of the different techniques and some drawbacks.
+
+\begin{table}[htb]
+\begin{center}
+\begin{tabulary}{\textwidth}{L|LLLL}
+\hline
+  & \multicolumn{2}{c}{Instrumentation} & VM Profiling & AOP\\
+  & Static & Dynamic\\
+\hline
+Level of Abstraction      & Instruction/Bytecode  & Instruction/Bytecode  & Bytecode      & Programming Language\\
+\hline
+Overhead                  & Runtime               & Runtime               & Runtime       & Design and deployment\\
+\hline
+Implementation Complexity & Comparatively low     & High                  & High          & Low\\
+\hline
+User Expertise            & Low                   & High                  & Low           & High\\
+\hline
+Re-compilation            & Required              & Not Required          & Not Required  & Required\\  
+\hline
+\end{tabulary}
+\end{center}
+\caption{Dynamic Analysis Techniques comparaison}
+\label{list:survey}
+\end{table}
+
+
+
+
+
