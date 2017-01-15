@@ -163,11 +163,21 @@ Re-compilation            & Required              & Not Required          & Not 
 \hline
 \end{tabulary}
 \end{center}
-\caption{Dynamic Analysis Techniques comparaison}
+\caption{Dynamic Analysis Techniques comparison}
 \label{list:survey}
 \end{table}
 
+This summary shows straightforwardly some limitations of the different Dynamic Analysis techniques. Instrumentation and VM Profiling based techniques induces high Run-time overheads whereas AOP needs heavy design and deployment efforts. While the implementation complexity is rather high for Dynamic Instrumentation and VM Profiling, a strong user expertise is also needed for the first one. Finally recompilation is needed for two on four techniques.
 
+Additionally, the programmer must be aware that the automated tools cannot guarantee the full test coverage of the source code. More over, however how powerful the tools can be, they might yet produce false positives and false negatives. This is why a human code understanding and reviewing is still an absolute necessity.
+
+\section{Concluding remarks}
+
+In this chapter, we tried to summaries some related work about program analysis. After defining what program analysis is, we briefly presented some of the static and dynamic approaches with their respective techniques. However, this is by no means an exhaustive presentation of all the approaches and the reader must be aware that the field is far more complex than that. 
+
+To complete this theoretical explanations, we presented some popular tools for both approaches and spoke about some general dynamic analysis limitations. During the redaction of the chapter, it appeared clearly that the DPA field is quite recent and therefore only a few researches were conducted on the subject. 
+
+In the next chapter, we will introduce our own contribution with  development of the proof-to-concept system.
 
 
 

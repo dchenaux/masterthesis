@@ -7,22 +7,36 @@
 \textit{``For me, open source is a moral thing.''} \\ Matt Mullenweg
 \end{flushright}
 
-In this chapter, the proposed solution will be explained in details including the Setup, Data capture model, Data model and it's User interface.
+In this chapter, we introduce our contribution to the dynamic program analysis. As explained in the introduction the aim is to develop a proof-to-concept system and all the steps to achieve it will be presented in details including the Setup, Data capture model, Data model and its user interface.
 
 
 \section{Proposed solution}
-start with the detailed description of what we actually propose
+The basic idea of the proof-to-concept system is to propose a solution which helps the programmer to be aware of the data evolution in their programs and give them the possibility to compare them with different runs. Indeed, it is a common faced situation for a coder to wonder how their variables are evolving and more the number of variables is expanding, more the comprehension is difficult. This is why, a tool which could gather data in realtime and generating graphs based on it would be more as handy.
+
+In order to achieve such a system, three different parts will be needed. First, a data capture model which will allow the programm to gather all the needed information about the running script. Then the data has to be stored somewhere and therefore a data model is needed. Finally, the interesting part for the final user, a user interface for reviewing the results. Each part is exposed in the development section.
 
 \section{Environement}
-The project is articulated around 4 main technologies. First the data is captured in \textit{Python} with the help of the integrated Debugger Framework. Then the extrated data is stored in a \textit{MongoDB} Database. Finally they are processed and showed with the help of \textit{Python}, \textit{Html/CSS} and \textit{Javascript}. Each module of the solution is presentend in details in the following sections. 
 
-Speak about the server, jenkins, linux..
+Speaking about the developing environment itself, the developing machine was installed on the GNU/Linux Distribution Fedora 24 with Python 3.4 and MongoDB 3.2. The chosen IDE was PyCharm academic edition version 2015 and then 2016. PyCharm is a very complete IDE which supports among others Python web frameworks, database support, code inspection. The details about the technologies are presented under the point 3.2.1.
 
-\section{Data capture model}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+In order to optimize the development management, the GitHub online tool was used.
 
-\section{Data model}
+\subsection{Technologies}
+For the project 4 main technologies were chosen in order to develop the required features. First the data is captured in \textit{Python} with the help of the integrated Debugger Framework. Python was chosen because of..
+Then the extrated data is stored in a \textit{MongoDB} Database. Finally they are processed and showed with the help of \textit{Python}, \textit{Html/CSS} and \textit{Javascript}. Each module of the solution is presentend in details in the following sections. 
+
+\subsection{Deployment}
+A deployment server was installed to simplify the following of the project for the different supervisors. The server is installed with Ubuntu Server 14.04
+
+\section{Development}
+
+\subsection{Data capture model}
+Base code from roman
+Basics of the pydebugger
+
+\subsection{Data model}
 how you store data in a database
 
-\section{User interface}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+\subsection{User interface}
+
+\section{Concluding remarks}
