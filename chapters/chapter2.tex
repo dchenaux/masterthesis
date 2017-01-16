@@ -45,7 +45,7 @@ ing, threads etc. &  \\
 \end{tabulary}
 \end{center}
 \caption{Comparison of Dynamic analysis with Static Analysis}
-\label{list:survey}
+\label{list:comparaison}
 \end{table}
 
 \bigskip
@@ -128,7 +128,7 @@ Based                 & *J                        & Java                 & & & &
 \end{tabulary}
 \end{center}
 \caption{Dynamic Analysis Tools}
-\label{list:survey}
+\label{list:dynamictools}
 \end{table}
 
 \textbf{Valgrind, Purify and Insure++} are instrumentation based and can automatically detect memory management and threading bugs among with profiling a program in details. While Valgrind is a instrumentation framework for building dynamic analysis tools, the two others are fully-fledged analysis software. \textbf{Javana} comes with an easy-to-use instrumentation framework so that only a few lines of instrumentation code need to be programmed for building powerful profiling tools. \textbf{Daikon} and \textbf{Diduce} are the most known tools for invariant detection and are respectively an offline and online tool. Last but not least, \textbf{Pin} is a dynamic binary instrumentation framework developed by Intel. It enables the creation of dynamic program analysis tools and can be used to observe low level events like memory references, instruction execution, and control flow as well as higher level abstractions such as procedure invocations, shared library loading, thread creation and system call execution.
@@ -164,7 +164,7 @@ Re-compilation            & Required              & Not Required          & Not 
 \end{tabulary}
 \end{center}
 \caption{Dynamic Analysis Techniques comparison}
-\label{list:survey}
+\label{list:limitations}
 \end{table}
 
 This summary shows straightforwardly some limitations of the different Dynamic Analysis techniques. Instrumentation and VM Profiling based techniques induces high Run-time overheads whereas AOP needs heavy design and deployment efforts. While the implementation complexity is rather high for Dynamic Instrumentation and VM Profiling, a strong user expertise is also needed for the first one. Finally recompilation is needed for two on four techniques.
@@ -178,6 +178,5 @@ In this chapter, we tried to summaries some related work about program analysis.
 To complete this theoretical explanations, we presented some popular tools for both approaches and spoke about some general dynamic analysis limitations. During the redaction of the chapter, it appeared clearly that the DPA field is quite recent and therefore only a few researches were conducted on the subject. 
 
 In the next chapter, we will introduce our own contribution with  development of the proof-to-concept system.
-
 
 
