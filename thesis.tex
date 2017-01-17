@@ -42,17 +42,69 @@
 \usepackage{tabulary}
 \usepackage{tabularx}
 \usepackage{multirow}
-\usepackage{listings}
+
+%--- Python code highlighting ---
+%http://tex.stackexchange.com/questions/83882/how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command#83883
+
+  \usepackage[utf8]{inputenc}
+
+  % Default fixed font does not support bold face
+  \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{10} % for bold
+  \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{10}  % for normal
+
+  % Custom colors
+  \usepackage{color}
+  \definecolor{deepblue}{rgb}{0,0,0.5}
+  \definecolor{deepred}{rgb}{0.6,0,0}
+  \definecolor{deepgreen}{rgb}{0,0.5,0}
+  \definecolor{mygray}{rgb}{0.5,0.5,0.5}
+
+  \usepackage{listings}
+
+  % Python style for highlighting
+  \newcommand\pythonstyle{\lstset{
+  language=Python,
+  basicstyle=\ttm,
+  otherkeywords={self},             % Add keywords here
+  keywordstyle=\ttb\color{deepblue},
+  emph={MyClass,__init__},          % Custom highlighting
+  emphstyle=\ttb\color{deepred},    % Custom highlighting style
+  stringstyle=\color{deepgreen},
+  frame=L,                         % Any extra options here
+  showstringspaces=false,
+  breaklines=true,
+  numbers=left,                     
+  numberstyle=\ttb\color{mygray},
+  numbersep=20pt,
+  xleftmargin=25pt,
+  framesep=10pt,          
+  }}
+
+
+  % Python environment
+  \lstnewenvironment{python}[1][]
+  {
+  \pythonstyle
+  \lstset{#1}
+  }
+  {}
+
+  % Python for external files
+  \newcommand\pythonexternal[2][]{{
+  \pythonstyle
+  \lstinputlisting[#1]{#2}}}
+
+  % Python for inline
+  \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+  
+%--- End of Python Highlighting --
+
+
 
 \hypersetup{urlcolor=DarkDarkBlue, colorlinks=true}  % Colours hyperlinks in blue, but this can be distracting if there are many links.
 \setcounter{tocdepth}{2}
 \makeindex
 \makeglossaries
-
-\newglossaryentry{utc}{name=UTC, description={Coordinated Universal Time}}
-\newglossaryentry{adt}{name=ADT, description={Atlantic Daylight Time}}
-\newglossaryentry{est}{name=EST, description={Eastern Standard Time}}
-
 
 %% ----------------------------------------------------------------
 \begin{document}
