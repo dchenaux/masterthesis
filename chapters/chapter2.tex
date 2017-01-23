@@ -17,16 +17,16 @@
 \textit{``Sharing is good, and with digital technology, sharing is easy.''} \\ Richard Stallman
 \end{flushright}
 
-As stated in the previous chapter, the goal of this thesis is to implement a dynamical program analysis system. In order to build a theoretical background, program analysis will be defined in this chapter along with the presentation of some available solutions and their restrictions.
+The intention of this thesis, as brought up in the introduction, would be to implement a dynamical program analysis system. In order to meet this ambition, it is unavoidable to build a theoretical understanding of "Program Analysis" and therefore the present chapter will endeavor to do a presentation of the subject. The first part propose a definition of the field, then the second suggest some technical approaches. Following, the third section introduce some trendy analysis tools, to finally discuss the actual limitations of dynamic analysis in the fourth part.
 
 \section{What is Program Analysis ?} 
 Programming environments are an essential key for the acceptance and success of a programming language. After \cite{Ducasse1994}, without the appropriate developments and maintenance tools, programmers are likely to have a bad software understanding and therefore produce low-quality code. They will be therefore reluctant to use a language without appropriate programming environments, however powerful the programming language is.
 
 As already introduced in the previous chapter, program analysis is an automated process which aims to analyze the behavior of a software regarding a property such as correctness, robustness, safety and liveness. Program analysis can be separated in two methods : the \gls{spa} which is performed without running the software and the \gls{dpa} which is obviously fulfilled during runtime. \citep{Wikipedi2016}
 
-The \gls{spa} is a really simple solution because it does not require running the program for analyzing the dynamic behavior of a program. It consists in going through the source code and highlight coding errors or ensure conformance to coding guidelines. A classic example of static analysis would be a compiler which is capable of finding lexical, syntactic and even semantic mistakes. The main advantage of this method is that it allows to reason about all possible executions of a program and gives assurance about any execution, prior to deployment. 
+The \gls{spa} is a really simple solution because it does not require running the program for analyzing its dynamic behavior. The analysis consists in going through the source code and highlight coding errors or ensure conformance to coding guidelines. A classic example of static analysis would be a compiler which is capable of finding lexical, syntactic and even semantic mistakes. The main advantage of this method is that it allows to reason about all possible executions of a program and gives assurance about any execution, prior to deployment. 
 
-Nevertheless, according to \cite{Gosain2015}, since the widespread use of object oriented languages, \gls{spa} is found to be ineffective. This can be explained because of the usage of run-time features like dynamic binding, polymorphism, threads etc. To remedy this situation, developers call on \gls{dpa} which can, after \cite{Marek2015100}, gain insight into the dynamics and runtime behavior of those systems during execution. Because the runtime behavior depends on many other factors, such as program inputs, concurrency, scheduling decisions, and availability of resources, static analysis is not capable of retrieving those values. The following table, proposed by \cite{Gosain2015}, is resuming the main differences between static and dynamic analysis.
+Nevertheless, according to \cite{Gosain2015}, since the widespread use of object oriented languages, \gls{spa} is found to be ineffective. This can be explained because of the usage of run-time features like dynamic binding, polymorphism, threads etc. To remedy this situation, developers call on \gls{dpa} which can, after \cite{Marek2015100}, gain insight into the dynamics and runtime behavior of those systems during execution. Moreover, because the run-time behavior depends now on many other factors, such as program inputs, concurrency, scheduling decisions, or availability of resources, static analysis does not allow full understanding of the code. The following table, proposed by \cite{Gosain2015}, is resuming the main differences between static and dynamic analysis.
 
 \bigskip
 
@@ -38,7 +38,7 @@ Nevertheless, according to \cite{Gosain2015}, since the widespread use of object
   Requires program to be executed	& Does not require program to be executed \\
   More precise & Less precise \\
   Holds for a particular execution & Holds for all the executions \\
-  Best suited to handle run-time programming lan & Lacks in handling run-time programming lan-\\
+  Best suited to handle run-time programming lan- & Lacks in handling run-time programming lan-\\
 guage features like polymorphism, dynamic bind & guage features.\\
 ing, threads etc. &  \\
   Incurs large run-time overheads & Incurs less overheads \\\hline
@@ -50,7 +50,7 @@ ing, threads etc. &  \\
 
 \bigskip
 
-A relevant point which comes out of this comparison, is that Dynamic Program Analysis is not replacing the Static Analysis, but on the contrary it is a complementary tool. Indeed, even if Static Program Analysis is not sufficient anymore, it gives nevertheless important information about the code for the programmer. The DPA is coming in a second phase when the SPA has been processed and the errors corrected. As it can be deduced, the main advantage of DPA is that it can examine the actual and exact run-time behavior of the program, whereas SPA main advantage is that it does not depend on input stimuli and can be generalized for all executions. To illustrate these differences, some program analysis solution will be presented further in this chapter.
+In the light of this comparison, it is well worth noting that Dynamic Program Analysis does not substitute to the Static Analysis. Quite the reverse, both are interdependent tools and even if Static Program Analysis is not sufficient anymore, it still gives relevant information about the code to the programmer. The DPA should come in a second phase when the source code has been validated through SPA. As it can be surmised, the ability to examine the actual and exact run-time behavior of the program might be the DPA main advantage, whereas SPA prime edge could be the independence of input stimuli and the generalization for all executions. To illustrate these characteristics, some program analysis solutions are presented further in this chapter.
 
 \pagebreak
 
@@ -178,5 +178,4 @@ In this chapter, we tried to summaries some related work about program analysis.
 To complete this theoretical explanations, we presented some popular tools for both approaches and spoke about some general dynamic analysis limitations. During the redaction of the chapter, it appeared clearly that the DPA field is quite recent and therefore only a few researches were conducted on the subject. 
 
 In the next chapter, we will introduce our own contribution with  development of the proof-to-concept system.
-
 
