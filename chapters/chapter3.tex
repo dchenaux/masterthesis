@@ -163,7 +163,7 @@ if event == 'exception':
 
 \subsection{Trace Ending}
 
-Finally, the data capture model is ended by the \pythoninline{set_quit()} BDB fonction which was remodeled for writing the last traced lines (line 6).
+Finally, the data capture model is ended by the \pythoninline{set_quit()} BDB function which was remodeled for writing the last traced lines (line 6).
 \begin{python}
 def set_quit(self):
     self.stopframe = self.botframe
@@ -181,7 +181,9 @@ def set_quit(self):
 
 
 \section{Data model}
-The data model is an in-between layer used for the Data capture model and the user interface.
+The data model is an in-between layer used for the Data capture model and the user interface. Both modules parts will be explained in this section along with the presentation of the data model itself.
+
+\subsection{Definition}
 
 \begin{python}
 class Line(EmbeddedDocument):
@@ -202,6 +204,36 @@ class File(Document):
     content = StringField()
     frames = ListField(EmbeddedDocumentField(Frame))
 \end{python}
+
+\subsection{Writing to the database}
+
+\subsection{Reading from the database}
 \section{User interface}
+
+The user interface is a web application which helps the programmer to review the result of the data capture model. It is based on the Python web framework Flask intended to be as lightweight as possible.
+
+\begin{python}
+from flask import Flask, render_template, redirect, url_for, flash, jsonify
+from flask_mongoengine import MongoEngine
+from flask_debugtoolbar import DebugToolbarExtension
+
+app = Flask(__name__)
+app.config['MONGODB_DB'] = settings.MONGODB
+app.config['SECRET_KEY'] = "xxx"
+app.debug = True
+if __name__ == "__main__":
+    app.run()
+\end{python}
+
+\subsection{Index page}
+\begin{python}
+@app.route("/")
+def index():
+    return render_template('index.html', files=File.objects.exclude("frames", "content").order_by('-timestamp'))
+\end{python}
+
+\subsection{Viewing a file}
+
+\subsection{Comparing files}
 
 \section{Concluding remarks}

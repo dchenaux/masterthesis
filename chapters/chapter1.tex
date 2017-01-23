@@ -7,14 +7,14 @@
 \label{chap:introduction}
 \lhead{Chapter 1. \emph{Introduction}} % Write in your own chapter title to set the page header
 
-Integrated development environments have been around for a few decades already, yet none of the modern \glspl{ide} was able to successfully integrate their source code editors with the actual data stream flowing though the code. Ability to display the actual data running through the system promises many potential benefits, including easier debugging and code recall, which results in significantly lower code maintenance costs. 
+Integrated development environments have been around for a few decades already, yet none of the modern \glspl{ide} was able to successfully integrate their source code editors with the actual data stream flowing through the code. Ability to display the actual data running through the system promises many potential benefits, including easier debugging and code recall, which results in significantly lower code maintenance costs. 
 
 \section{Problem definition}
 Every developer is more or less feared about the debugging and code reviewing phase of their software. Obviously, this process can sometimes take several painfully hours and each programmer knows how frustrating it can be to search for a hidden bug in thousands lines of codes. In order to support the programmers in this hated task, debuggers are the most useful existing tools which are part of the so called \textit{static program analysis}. 
 
-With the apparition of object-oriented programming language, searching for syntactic errors in the code is not anymore sufficient. Therefore, a new research field was pushed forward which is called the \textit{dynamic program analysis} and consists in analyzing the software during it's execution. This procedure allows to take in account some possible inputs which weren't probed with the \gls{spa}. Yet none of the modern IDEs was able to successfully integrate their source code editors with the actual data stream flowing though the code. This is why the present project, which goals and objects are defined in the next section, is aiming to contribute to the subject.
+With the apparition of object-oriented programming language, searching for syntactic errors in the code is not anymore sufficient. Therefore, a new research field was pushed forward which is called the \textit{dynamic program analysis} and consists in analyzing the software during its execution. This procedure allows to take in account some possible inputs which were not probed with the \gls{spa}. Yet none of the modern IDEs was able to successfully integrate their source code editors with the actual data stream flowing through the code. This is why the present project, which objectives are defined in the next section, is aiming to contribute to the subject.
 
-\section{Goals and objectives}
+\section{Objectives}
 The goal of this project is to design a proof-of-concept system in one programming language that allows full code instrumentation. This system should be able to seamlessly capture all values for all variables in source code and store them somewhere, with further possibility to easily retrieve saved values. The system should also provide an API to the storage in order to make the data accessible for navigation and display in third-party applications. Also, a basic visualizing interface will also be included in order to allow an easy review of the results. Finally, an evaluation of system's performances will be established through different experiments.
 
 \section{Organization}
@@ -25,4 +25,4 @@ The thesis is divided in four main sections :
   \item \textbf{Installation guide}: Simply an installation guide of the software which describes the needed environment, the package installation and the compilation of the system.
   \item \textbf{Experiments}: Finally in this section a few experiments will be conducted in order to test and check the performance and results of the software.
 \end{enumerate}
-The thesis concludes with some outputs and is proposing some future improvements which seem to be important.
+The thesis concludes with some outputs and is proposing some future improvements which could be relevant.
