@@ -27,15 +27,8 @@ Secondly, the extracted data is stored in a \textit{MongoDB} Database. MongoDB i
 Finally, the used interface was built with the help of \textit{Python}, \textit{Html/CSS} and \textit{Javascript}. As already said, Python is now an interesting language to develop web applications and was used here, with the help of the Flask framework, for the server side process. HTML/CSS and Javascript were used for the presentation of the results.
 
 Additionally, the chosen IDE was PyCharm academic edition version 2015 and then 2016. PyCharm is a very complete IDE which supports among others Python web frameworks, database support, code inspection. In order to optimize the development management, the GitHub online tool was chosen as version control repository. The deployment during the development of the solution was tested on virtual machine server under Ubuntu Server 14.04. The server is provided by the Department of Informatics at the University of Fribourg and is accessible internally at \url{http://diufpc115.unifr.ch/}. This server will also be used for the experiments in the chapter 5. 
-\pagebreak
 
 In order to deploy regularly the newest version of the ongoing work an automation server named Jenkins was configured. Jenkins was charged to fetch every day the latest prototype on the GitHub repository, create a package of it and install it on the server. If during this process a bug occurred, an e-mail to the interested persons was sent.
-\begin{figure}[h!]
-  \centering
-    \includegraphics[width=\textwidth]{figures/jenkins.png}
-    \caption{The Jenkins home page}
-    \label{fig:jenkins}
-\end{figure}
 
 In the next section, each module of the proposed system will be exposed in details regarding their functionality and their implementations.
 
@@ -272,33 +265,71 @@ Reading from the database exclusively arises in the user interface module. In or
 file_object = File.objects(id=file_id)
 \end{python} 
 
-This line of code gather the complete data of a run, but thanks to the API of MongoEngine it is also possible to retrieve specifically the needed data.
+This line of code gather the complete data of a run, but thanks to the API of MongoEngine it is also possible to retrieve specifically the needed data. If this special options are in the interest of the reader, we suggest to refer directly to the MongoEngine documentation.
 
 \section{User interface}
-The user interface is a web application which helps the programmer to review the result of the data capture model. It is based on the Python web framework \textit{Flask} intended to be as lightweight as possible. To initialize and start a new web application with the Flask framework only a few lines are needed.
+The user interface is a web application which helps the programmer to review the result of the data capture model. In this section, the focus will be made on the features rather than on the code for different reasons. First, the user interface code is not considered here as the core knowledge of the developed system. Then the complete web application represent almost 1000 lines of code and would stretch considerably out this report with few added value. Finally a non negligible part of the code fulfill a visual and presentation purpose rather than actual features. This is why only some key code section will be showed directly here.
 
-\begin{python}
-from flask import Flask, render_template, redirect, url_for, flash, jsonify
-from flask_mongoengine import MongoEngine
-from flask_debugtoolbar import DebugToolbarExtension
+\subsection{Technologies}
+The web application is based on the Python web framework \textit{Flask} which is intended to be as lightweight as possible. The flask micro-framework comes with some handy features such as built-in development server and debugger, integrated unit testing support, RESTful request dispatching, or \textit{Jinja2} templating. Flask is normally design to connect with standard SQL databases but with the help of the \textit{flask-mongoengine} extension the process is pretty straightforward.
 
-app = Flask(__name__)
-app.config['MONGODB_DB'] = settings.MONGODB
-app.config['SECRET_KEY'] = "xxx"
-app.debug = True
-if __name__ == "__main__":
-    app.run()
-\end{python}
+The shaping of the web-application is indeed done with the help of \textit{HTML/CSS} and \textit{Javascript}. For purposes of standardization, the \textit{Bootstrap} framework came in help which includes also the convenient \textit{JQuery} javascript framework. Bootstrap is a popular HTML, CSS, and JS open-source framework for developing front-end projects on the web. As for Jquery it is a fast, small, and feature-rich JavaScript library which makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
-\subsection{Index page}
-\begin{python}
-@app.route("/")
-def index():
-    return render_template('index.html', files=File.objects.exclude("frames", "content").order_by('-timestamp'))
-\end{python}
+Some other libraries came also during the development to format the data out of the database. With this aim in mind, the first used library was DataTables which makes formatting data in table a child's play. Additionally the \textit{Highcharts} Javascript library was used to generate every graphs and \textit{pygments} came for highlighting the Python syntax.
 
-\subsection{Viewing a file}
+\subsection{The cockpit}
+The user interface is composed of three main pages. The first one presented here is the index page which simply propose an overview of the different runs stored in the database. This page also act as a cockpit which allows the user to view runs in detail, select runs for comparison and to delete unwanted runs from the database. The runs are searchable and can be sorted by dates, file name, Git revision or user name. It is also possible for the user to configure how many runs should be shown per page.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{The index page}
+    \label{fig:jenkins}
+\end{figure}
 
-\subsection{Comparing files}
+\subsection{The file reviewer}
+Once the user selected a run in the cockpit, he will be directly redirected to a reviewing page as illustrated by the \autoref{fig:viewafile}. 
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{Viewing a file}
+    \label{fig:viewafile}
+\end{figure}
+
+This page is separated in 4 main sections. First, in the head of the page the user gets some basic information about the run such as the file name, the date of the run or the git revision. Directly underneath, when possible, a plot graph is computed and shows by default all the available objects. The user can directly from the graph choose to hide some variable and the scope of the graph is automatically adapted to the remaining values. Additionally, the chart can also be printed and exported in several different formats. A focused view of the two first sections is depicted in the \autoref{fig:infoandgraph}.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{Run information and graph}
+    \label{fig:infoandgraph}
+\end{figure}
+
+A bit further, separated in two vertical columns, the user will find in the left part the complete source code of the analyzed file. The pieces of code which were genuinely analyzed are highlighted in a light yellow color and moreover every line has been numbered and syntactically colored. The line numbers are clickable and open a panel in the left column with some further information about the analyzed objects. Each panel contains a header with the frames name and the line number, and a body with the objects names, their values and a small inline graph resume the evolution of the value. The figure \autoref{sourcepanel} shows in detail these described features. Additionally on the top of the right column some buttons allow to show all the panel, close them or selectively open all panel linked to a frame.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{Run information and graph}
+    \label{fig:sourcepanel}
+\end{figure}
+
+\subsection{File comparison}
+If needed the user has also the possibility to select several files in the cockpit in order to compare them. This is done by checking the needed runs and clicking the "compare" link at the bottom of the page. Doing so will redirect the user on the start page of the comparison. From this page, each file can be inspected and the user is given the choice of which object he wants to select for the comparison as shown on the \autoref{fig:comparisonstart}.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{Run information and graph}
+    \label{fig:comparisonstart}
+\end{figure}
+
+For each selected object, the user has the possibility to see the source file or eventually to unselect it. When he is happy with his selection, graphs can be generated with the triggering of the "Generate graphs" button. For each run a graph will be created an disposed in a way which facilitates comparison as shown on \autoref{fig:generatedgraphs}.
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=\textwidth]{figures/jenkins.png}
+    \caption{Run information and graph}
+    \label{fig:generatedgraphs}
+\end{figure}
+
 
 \section{Concluding remarks}
+In this chapter, we tried to give an brief but complete insight of the implementation of our solution. It was quite a challenge to summaries 6 monthes of development, over 2000 lines of code (around 32'000 with all libraries included !) in a short and comprehensive chapter.
+
