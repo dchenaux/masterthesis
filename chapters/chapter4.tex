@@ -14,7 +14,7 @@ Because the installation guide is often left out in academic works, we want to d
 
 \section {Setting up the environment}
 
-In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool might work under Windows or MacOS as the used libraries should all be cross-platform, but the software has never been tested under these platforms. For the persons who might not want to switch to a native GNU/Linux system it is needless to say that it will also work in a virtual machine. As it was used during the development and the testing phases we strongly recommend a Fedora distribution and therefore this guide will be based on this system commands.
+In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool might work under Windows or MacOS as the used libraries should all be cross-platform, but the software has never been tested under these platforms. For those who might not want to switch to a native GNU/Linux system it is needless to say that it will also work in a virtual machine. As it was used during the development and the testing phases we strongly recommend a Fedora distribution and therefore this guide is based on this distributions commands.
 
 \subsection{Python installation}
 
@@ -43,7 +43,7 @@ sudo dnf install mongodb-org
 sudo service mongod start
 \end{lstlisting}
 
-\subsection{Setting up a virtual environnement}
+\subsection{Setting up a virtual environment}
 
 The required environment is now set up. Additionally, the user will certainly want to create a python virtual environment in order to keep the original installation clear. First, the required package has to be installed :
 \smallskip
@@ -57,7 +57,7 @@ Then in a new directory, the virtual environment is created :
 virtualenv -p /usr/bin/python3.5 venv
 \end{lstlisting}
 
-Finally to begging using the new created environment :
+Finally to start using the new created environment :
 \smallskip
 \begin{lstlisting}[language=bash]
 source venv/bin/activate
@@ -67,7 +67,7 @@ More information about using a virtual environment is available online. \citep{v
 
 \section{Installation}
 \subsection{Package installation}
-In order to simplify the installation process, a packaged version has been built and is ready to download on the project's \href{https://github.com/dchenaux/Yoda}{GitHub page}. The installation process is really straightforward and since it is a \gls{pip} package. Assuming the reader followed the instruction in the past section, the following command will install the package and its required dependencies. 
+In order to simplify the installation process, a packaged version has been built and is ready to be downloaded from the projects \href{https://github.com/dchenaux/Yoda}{GitHub page}. The installation process is really straightforward and since it is a \gls{pip} package. Assuming the reader followed the instruction in the past section, the following command will install the package and its required dependencies. 
 \smallskip
 \begin{lstlisting}[language=bash]
 pip install yoda-1.0.tar.gz
@@ -85,7 +85,7 @@ python3 setup.py sdist
 This package can be installed the same way as described a bit earlier.
 
 \section{Usage}
-Now that the complete system is installed, the user interface can be launched locally with the following command :
+Now that the complete system is installed, the user interface can be launched with the following command :
 \smallskip
 \begin{lstlisting}[language=bash]
 python venv/lib/python3.5/site-packages/yoda/web_exec.py
