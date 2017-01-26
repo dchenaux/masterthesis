@@ -10,24 +10,89 @@
 \end{flushright}
 
 
-In this chapter, the complete installation process of the developed script will be presented.
+Because the installation guide is often left out in academic works, we want to dedicate a special chapter to the process. Here the reader will be able to learn how to deploy the system on his own machine by first configuring his environment and then deploy the application by the installation of the provided package or by doing a compilation from the source code.
 
 \section {Setting up the environment}
 
-In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool might work under Windows or MacOS as the used libraries should all be cross-platform, but the software has never been tested under these platforms.
+In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool might work under Windows or MacOS as the used libraries should all be cross-platform, but the software has never been tested under these platforms. For the persons who might not want to switch to a native GNU/Linux system it is needless to say that it will also work in a virtual machine. As it was used during the development and the testing phases we strongly recommend a Fedora distribution and therefore this guide will be based on this system commands.
 
-As the main used language is Python you should install it with the following command :
+\subsection{Python installation}
 
+As the main used language is Python and more specifically the third version of it, the first step is to verify its installation and in case it would not be present install the needed packages by using the following command :
+\begin{lstlisting}[language=bash]
+sudo dnf install python3 python3-pip
+\end{lstlisting}
 
-\section{Use the packaged version}
-In order to simplify the installation process, a packaged version has been built and is ready to download on the project's \href{https://github.com/dchenaux/Yoda}{GitHub page}.
+\subsection{MongoDB installation}
 
-The installation process is really straightforward and since it's a \gls{pip} package.
+Next step is to install the second dependency : the MongoDB database engine. First thing first, the repository has to be added to the install sources and can be done by creating a \texttt{/etc/yum.repos.d/mongodb-org-3.4.repo} file containing :
+\smallskip
+\begin{lstlisting}[language=bash]
+[mongodb-org-3.4]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/7/mongodb-org/3.4/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
+\end{lstlisting}
 
-\section{From source code}
+Then the latest stable package (currently version 3.2.11) can be installed with the dnf package manager and then directly launch by the following command. In case of installation problems we ask the reader to refer to the official documentation.
+\smallskip
+\begin{lstlisting}[language=bash]
+sudo dnf install mongodb-org
+sudo service mongod start
+\end{lstlisting}
 
-\section{Deploy on Apache}
+\subsection{Setting up a virtual environnement}
 
-\subsection{Accessing the user interface}
-Assuming the installation process has already been followed as explained in the chapter 4, the user interface should be accessible in any browser. When using the flask integrated web server, the application is available locally under the adress \url{http://127.0.0.1:5000/}. If installed on an external webserver it depends on the configuration of this last one. When configured as in the installation guide it should be accessible locally through \url{http://127.0.0.1:80}
+The required environment is now set up. Additionally, the user will certainly want to create a python virtual environment in order to keep the original installation clear. First, the required package has to be installed :
+\smallskip
+\begin{lstlisting}[language=bash]
+sudo pip3 install virtualenv
+\end{lstlisting}
 
+Then in a new directory, the virtual environment is created :
+\smallskip
+\begin{lstlisting}[language=bash]
+virtualenv -p /usr/bin/python3.5 venv
+\end{lstlisting}
+
+Finally to begging using the new created environment :
+\smallskip
+\begin{lstlisting}[language=bash]
+source venv/bin/activate
+\end{lstlisting}
+
+More information about using a virtual environment is available online. \citep{venv}
+
+\section{Installation}
+\subsection{Package installation}
+In order to simplify the installation process, a packaged version has been built and is ready to download on the project's \href{https://github.com/dchenaux/Yoda}{GitHub page}. The installation process is really straightforward and since it is a \gls{pip} package. Assuming the reader followed the instruction in the past section, the following command will install the package and its required dependencies. 
+\smallskip
+\begin{lstlisting}[language=bash]
+pip install yoda-1.0.tar.gz
+\end{lstlisting}
+
+The installated files are now located in \texttt{venv/lib/python3.5/site-packages/yoda/}.
+
+\subsection{Package creation}
+In case the reader wishes to do some modification of the system and wants to create a new packaged version, we created a \texttt{setup.py} file which allows easy package creation
+\smallskip
+\begin{lstlisting}[language=bash]
+python3 setup.py sdist
+\end{lstlisting}
+
+This package can be installed the same way as described a bit earlier.
+
+\section{Usage}
+Now that the complete system is installed, the user interface can be launched locally with the following command :
+\smallskip
+\begin{lstlisting}[language=bash]
+python venv/lib/python3.5/site-packages/yoda/web_exec.py
+\end{lstlisting}
+The user interface should be now locally accessible in any browser at the \url{http://127.0.0.1:80} address.
+
+To try a first analysis we recommend the user to download the sample script also available on the GitHub repository and simply launch it from the command line.
+
+\section{Concluding remarks}
+To conclude the installation guide, we wanted to point out that only the most basic setup was explained here. Indeed, thanks to the use of the flask framework a lot of power user configuration is possible, such as running the user interface through a different port, make the interface accessible from other machines, deploy it on many popular web-servers. In the next chapter, some experiments are done to measure the performance of the whole system.
