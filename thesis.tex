@@ -42,6 +42,7 @@
 \usepackage{tabulary}
 \usepackage{tabularx}
 \usepackage{multirow}
+\usepackage{pdfpages}
 
 %--- Python code highlighting ---
 %http://tex.stackexchange.com/questions/83882/how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command#83883
@@ -151,13 +152,11 @@
 \abstract{
 \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
 \setcounter{page}{2}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Integrated development environments have been around for a few decades already, yet none of the modern integrated development environment was able to successfully integrate their source code editors with the actual data stream flowing through the code. The intention of this thesis is to implement a proof-to-concept system for effective code maintenance with continuous data collection.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+The results of the development are detailed in the present report. In order to understand the field of Dynamic Program Analysis, this work first dedicate an entire chapter about related work which includes a definition of the program analysis, several approaches and a brief overview of available tools. Then, a presentation of the coded system is made and finally we propose at the end of the thesis some future work which could be implemented in the developed system.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 }
 
 \clearpage  % Abstract ended, start a new page
@@ -180,13 +179,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor i
 % The Acknowledgements page, for thanking everyone
 \acknowledgements{
 \addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+First, I would like to thank Prof. Philippe Cudré-Mauroux for the creation and the lead of the eXascale Infolab. This research group is a great asset for the  University of Fribourg and gives amazing opportunities to explore technical and experimental fields in many informatic sectors.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Then, I would particulary like to thank Roman Prokovyev who supervised my work and who has been really supportive and comprehensive with my time schedule. I thank aswell Michael Luggen who came in backup and gave a fresh insight on the developed proof-to-concept system.
 
-%The environment of souls where I live in is what enabled and finally also formed this work.
+Finally, I send all my gratitude to Prof. Marino Widmer for helping me with my administrative struggles and Gaëtan Vieux for his final corrections and suggestions.
 }
 \vfill\vfill\null
 \clearpage  % End of the Acknowledgements
@@ -273,6 +271,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 \lhead{\emph{Bibliography}}  % Change the left side page header to "Bibliography"
 \bibliographystyle{plainnat}  % Use the "unsrtnat" BibTeX style for formatting the Bibliography
 \bibliography{thesis}  % The references (bibliography) information are stored in the file named "Bibliography.bib"
+\clearpage
+%% ----------------
+
+\pagestyle{empty}
+\label{Declaration}
+\includepdf[pages=-, offset=75 -75]{appendices/declaration.pdf}
+
+\clearpage
 
 
 %% ----------------------------------------------------------------
