@@ -13,25 +13,25 @@
 In this chapter, we present the result of our work on the dynamic program analysis. Introduced in the first chapter, the proof-of-concept system is staged here through the explanation of some key code parts and its developed features.
 
 \section{Proposed solution}
-While working on a growing project, there is always a point where it becomes difficult to have knowledge about what data is used for. Indeed variables are one of the most important pieces in a source code and in order to give the programmer a better overview of the variables evolution, this work intents to propose a proof-to-concept system which will not only monitor the data evolution, but also give the possibility to compare the gathered data between different runs.
+While working on a growing project, there is always a point where it becomes difficult to have knowledge about what data is used for. Indeed variables are one of the most important pieces in a source code and in order to give the programmer a better overview of the variables evolution, this work intents to propose a proof-of-concept system which will not only monitor the data evolution, but also give the possibility to compare the gathered data between different runs.
 
 To achieve such a system, the project has been separated in three different components which will constitute the system. First, a data capture process is monitoring all the needed variables and their evolution during the execution of the reviewed program. Then a data model has been created along with a backup procedure which stores the data in this model. Finally, a web-application processes the extracted data and shows them for reviewing the results. Each mentioned part is described in detail in the following sections.
 
 \section{Environment}
-In order to achieve the proof-of-concept system, we chose four technologies. First, we used the \textit{Python} programming language to instrument the data. Python is a widely used high level programming language which has seen these last year an increasing enthusiasm around it and is now the most popular introductory teaching language at U.S. top universities according to \citep{Guo2014}. Thanks to the dynamic nature of Python, which includes a dynamic type system, the real-time collection of object is a straightforward process and therefore it made plenty sense to use it for a proof-of-concept application. More over Python offers a handy integrated Debugger Framework and also good compatibility with other programming language since there are a lot of bindings available. For this project, we used the version 3 of Python because of improved encoding handling.
+In order to achieve the proof-of-concept system, we chose four technologies. First, we used the \textit{Python} programming language to instrument the data. Python is a widely used high level programming language which has seen these last year an increasing enthusiasm around it and is now the most popular introductory teaching language at U.S. top universities according to \cite{Guo2014}. Thanks to the dynamic nature of Python, which includes a dynamic type system, the real-time collection of object is a straightforward process and therefore it made plenty sense to use it for a proof-of-concept application. More over Python offers a handy integrated Debugger Framework and also good compatibility with other programming language since there are a lot of bindings available. For this project, we used the version 3 of Python because of improved encoding handling.
 
 Secondly, the extracted data is stored in a \textit{MongoDB} Database which is a document-oriented database entering in the new category of No-SQL database systems. MongoDB has the advantage to use \gls{json} like documents with schema and consequently this is why we choose it to store the heterogeneous extracted data.
 
-Finally, the user interface is built with the help of \textit{Python}, \textit{HTML/CSS} and \textit{Javascript}. Python is now an interesting language to develop web applications and is used here, with the help of the Flask framework, for the server side process. HTML/CSS and Javascript are used for the presentation of the results.
+Finally, the user interface is built with the help of \textit{Python}, \textit{HTML/CSS} and \textit{Javascript}. Python is now an interesting language to develop web applications because of his extensive support of libraries and is used here, with the help of the Flask framework, for the server side process. HTML/CSS and Javascript are used for the presentation of the results.
 
-Additionally, the chosen IDE is PyCharm which is a very complete IDE supporting among others Python web frameworks, databases, code inspection. This IDE is essential for the development of our application because of it helps us with its good library handling and its integrated version control repository manager. In order to optimize the development management, we choose the GitHub online tool as version control repository. The deployment during the development of the solution was tested on virtual machine server under Ubuntu Server 14.04 which is also used for the experiments in the chapter 5. 
+Additionally, the chosen IDE is PyCharm which is a very complete IDE supporting among others Python web frameworks, databases, code inspection. This IDE is essential for the development of our application because it helped us with its good library handling and its integrated version control repository manager. In order to optimize the development management, we choose the GitHub online tool as version control repository. The deployment during the development of the solution was tested on virtual machine server under Ubuntu Server 14.04. 
 
 In order to deploy regularly the newest version of the ongoing work, an automation server named Jenkins was configured. Jenkins is charged to fetch every day the latest prototype on the GitHub repository, create a package of it and install it on the server. If during this process a bug occurs, an e-mail to the interested persons is sent.
 
 In the next section, each module of the proposed system will be exposed in details regarding their functionality and their implementations.
 
 \section{Data Capture Process}
-This section presents the crucial developed elements of the data capture process. The data capture process, also called \textit{analyser} , is the core of the system and is based on the Python Debugger Framework (\gls{bdb}). BDB handles basic debugger functions, like setting breakpoints or managing execution. Thanks to the object-oriented features (classes and functions inheritance) of Python, it is a simple task to rewrite the different functionality as needed for this project. The different features are regrouped in a global class which we called \textit{Yoda}.
+This section presents the crucial developed elements of the data capture process. The data capture process, also called \textit{analyser}, is the core of the system and is based on the Python Debugger Framework (\gls{bdb}). BDB handles basic debugger functions, like setting breakpoints or managing execution. Thanks to the object-oriented features (classes and functions inheritance) of Python, it is a simple task to rewrite the different functionality as needed for this project. The different features are regrouped in a global class which we called \textit{Yoda}.
 
 
 \subsection{Setting up the trace}
@@ -42,8 +42,8 @@ yoda.analyser.db.set_trace()
 \end{python}
 
 The \pythoninline{set_trace()} function is inherited from the BDB and is needed to start debugging with a Bdb instance from a caller’s frame.
-It is also absolutely necessary to stop the trace at the end of the target code with the \pythoninline{yoda.analyser.db.set_quit()
-} function which set the quitting attribute to \texttt{True}. This raises BdbQuit exception in the next call to one of the \pythoninline{dispatch_*()} methods with the goal to prevent further tracing. Indeed, even if the complete file is analysed, this needs absolutely to be set. 
+It is also necessary to stop the trace at the end of the target code with the \pythoninline{yoda.analyser.db.set_quit()
+} function which set the quitting attribute to \texttt{True}. This raises BdbQuit exception in the next call to one of the \pythoninline{dispatch_*()} methods with the goal to prevent further tracing. Indeed, even if the complete file is analysed, this needs absolutely to be set to avoid unexpected further analysis. 
 
 The detailed information about the operating of the Python Debugger Framework, is provided in the official documentation \citep{Foundation2017}.
 
@@ -123,7 +123,7 @@ def _filter_locals(self, local_vars):
 
 \end{python}
 
-Then, the locals are stored in a JSON defaultdict object along with the file name, the frame and the line number. At the end, the JSON dictionary is periodically stored in the database in order to flush the data from the memory and enhance the run-time performances. The population of the database is detailed in the next point.
+Then, the locals are stored in a JSON defaultdict object along with the file name, the frame and the line number. At the end, the JSON dictionary is periodically stored in the database in order to flush the data from the memory and enhance the runtime performances. The population of the database is detailed in the next point.
 
 \begin{python}
 if self.total_linenb > self.next_backup:
@@ -144,7 +144,7 @@ if event == 'exception':
 
 \subsection{Trace Ending}
 
-Finally, the data capture model is ended by the \pythoninline{set_quit()} BDB function which was remodeled for writing the last traced lines (line 7-11).
+Finally, the data capture model is ended by the \pythoninline{set_quit()} BDB function which was remodelled for writing the last traced lines (line 7-11).
 \begin{python}
 def set_quit(self):
     self.stopframe = self.botframe
@@ -257,7 +257,7 @@ for name, lines in sorted(frames.items()):
 
 \subsection{Reading from the database}
 
-Reading from the database exclusively arises in the user interface module. In order to cut down the procedure, the \textit{MongoEngine} library has been chosen. The MongoEngine is a Document-Object Mapper for working with MongoDB from Python. Hence the use of this library allows to gather the data of a run in the database only with one line of code.
+Reading from the database exclusively arises in the user interface module. In order to cut down the procedure, the \textit{MongoEngine} library has been chosen. The MongoEngine is a Document-Object Mapper for working with MongoDB from Python. Thanks to the use of this library, it is possible to gather the data of a run in the database only with one line of code.
 \begin{python}
 file_object = File.objects(id=file_id)
 \end{python} 
@@ -294,7 +294,7 @@ Once the user selected a run in the cockpit, he will be directly redirected to a
 
 This page is separated in 4 main sections. First, at the head of the page the user gets some basic information about the run such as the file name, the date of the run or the git revision. Directly underneath, when possible, a plot graph is computed and shows by default all the available objects. The user can directly from the graph choose to hide some variable and the scope of the graph is automatically adapted to the remaining values. Additionally, the chart can also be printed and exported in several differents formats.
 
-A bit further, separated in two vertical columns, the user will find in the left part the complete source code of the analyzed file. The pieces of code which were genuinely analyzed are highlighted in a light yellow color and moreover every line has been numbered and syntactically colored. The line numbers are clickable and open a panel in the left column with some further information about the analyzed objects. Each panel contains a header with the frames name and the line number, and a body with the objects names, their values and a small inline graph resuming the evolution of the value. The \autoref{fig:filefocus} shows in detail these described features. Additionally on the top of the right column some buttons allow to show all the panel, close them or selectively open all panels linked to a frame.
+A bit further, separated in two vertical columns, the user will find in the left part the complete source code of the analyzed file. The pieces of code which were genuinely analyzed are highlighted in a light yellow color and moreover every line has been numbered and syntactically colored. The line numbers are clickable and open a panel in the right column with some further information about the analyzed objects. Each panel contains a header with the frames name and the line number, and a body with the objects names, their values and a small inline graph resuming the evolution of the value. The \autoref{fig:filefocus} shows in detail these described features. Additionally on the top of the right column some buttons allow to show all the panel, close them or selectively open all panels linked to a frame.
 
 \begin{figure}[h!]
   \centering
@@ -321,4 +321,4 @@ For each selected object, the user has the possibility to see the source file or
 \end{figure}
 
 \section{Concluding remarks}
-In this chapter, we tried to give a brief but complete insight of the implementation of our solution. It was quite a challenge to summary 6 months of development, over 2000 lines of code (around 32'000 with all libraries included !) in a short and comprehensive chapter. The use of Python was a new challenge for us as we were more used to develop in PHP for this kind of application and therefore we have to learn to know and use all the different libraries. The choice of MongoDB was also a discovery as we were more used to work with relation databases. We hope we were able to give the reader a good insight of operating method of our developed system. In the next chapter, we are giving a complete guide to install and start the system.
+In this chapter, we tried to give a brief but complete insight of the implementation of our solution. It was quite a challenge to summary 6 months of development, over 2000 lines of code (around 32'000 with all libraries included !) in a short and comprehensive chapter. The use of Python was a new challenge for us as we were more used to develop in PHP for this kind of application and therefore we had to learn to know and use all the different libraries. The choice of MongoDB was also a discovery as we were more used to work with relation databases. We hope we were able to give the reader a good insight of operating method of our developed system. In the next chapter, we are giving a complete guide to install and start the system.

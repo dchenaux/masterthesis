@@ -12,7 +12,7 @@
 In this section different type of experiments will be conducted in order to test and check the performance of the developed software.
 
 \section{Test script and machine}
-In order to conduct the different experiments, we chose a test script available online at \url{https://github.com/TheAlgorithms/Python/blob/master/hashes/md5.py}. We select this test script because it is generating a high amount of numerical values which is interesting to fully exploit the end user interface. Indeed, the script checks if the \gls{md5} value of a string correspond to a given value and in order to calculate this MD5 value, the script is generating millions of values.
+In order to conduct the different experiments, we chose a test script available \href{https://github.com/TheAlgorithms/Python/blob/master/hashes/md5.py}{online}. We selected this test script because it is generating a high amount of numerical values which is interesting to fully exploit the end user interface. Indeed, the script checks if the \gls{md5} value of a string correspond to a given value and in order to calculate this MD5 value, the script is generating millions of values.
 
 Concerning the testing machine itself, we chose to run the tests directly on our personal laptop because it correspond to the usage the system is intended for : a personal debugging tool. The specifications of the machine are the following ones :
 \begin{itemize}
@@ -24,7 +24,7 @@ Concerning the testing machine itself, we chose to run the tests directly on our
 \end{itemize}
 
 \section{Objectives}
-For the experiments, we want here to test two aspect of our system : the memory usage and the runtime. To be able to measure these two parameters, we use a Python tool called \textit{Memory profiler}. This tool is for monitoring memory consumption of a process as well as line-by-line analysis of memory consumption for python programs. It allows also to plot memory consumption as a function of time and measure the execution time of the target script. With these extracted parameters, the tool is also capable to plot graphs. Our aim is to demonstrate if dynamic analysis induces overheads with the help of the memory profiler and our dynamic analysis solution.
+For the experiments, we want here to test two aspects of our system : the memory usage and the runtime. To be able to measure these two parameters, we use a Python tool called \textit{Memory profiler}. This tool is for monitoring memory consumption of a process as well as line-by-line analysis of memory consumption for python programs. It allows also to plot memory consumption as a function of time and measure the execution time of the target script. With these extracted parameters, the tool is also capable to plot graphs. Our aim is to demonstrate if dynamic analysis induces overheads with the help of the memory profiler and our dynamic analysis solution.
 
 \section{Performances}
 \subsection{Test script}
@@ -62,4 +62,4 @@ As it is shown in the \autoref{fig:memudb}, the introduction of the data writing
 
 \section{Concluding remarks}
 
-In the \autoref{chap:relatedwork}, we already introduced some limitation of dynamic analysis tools, which is often heavy runtime overhead. We showed in the experiments that our solution is not an exception and induces even on a small script a heavier memory consumption and a significant runtime overhead. It has to be pointed out that the memory profiler is not an exact tool. In deed, according to \cite{Pedregos2016}, this module gets the memory consumption by querying the operating system kernel about the amount of memory the current process has allocated, which might be slightly different from the amount of memory that is actually used by the Python interpreter. Also, because of how the garbage collector works in Python the result might be different between platforms and even between runs.
+In the \autoref{chap:relatedwork}, we already introduced some limitation of dynamic analysis tools, which is often heavy runtime overhead. We showed in the experiments that our solution is not an exception and induces even on a small script a heavier memory consumption and a significant runtime overhead. It has to be pointed out that the memory profiler is not an exact tool. Indeed, according to \cite{Pedregos2016}, this module gets the memory consumption by querying the operating system kernel about the amount of memory the current process has allocated, which might be slightly different from the amount of memory that is actually used by the Python interpreter. Also, because of how the garbage collector works in Python the result might be different between platforms and even between runs.
