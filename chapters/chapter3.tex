@@ -95,7 +95,7 @@ if self.file_name is None:
 \end{python}
 
 \subsection{Event Handling}
-The first handled event type is the \texttt{call} type. This kind of event is normally happening when the frame of the code is changing and thus is really short. Indeed, it just need to capture the frame name (line 2) and catch the line number (line 3). Nothing else special is handled there.
+The first handled event type is the \texttt{call} type. This kind of event is normally happening when the frame of the code is changing and thus there is not much to do. Indeed, it just need to capture the frame name (line 2) and catch the line number (line 3). Nothing else special is handled there.
 \begin{python}
 if event == 'call':
     self.cur_framename = str(frame.f_code.co_name)
@@ -103,12 +103,12 @@ if event == 'call':
     self.set_step() # continue
 \end{python}
 
-The succeeding event type is the the \texttt{line} type which occurs at each line-break. This event is vital for the data collection and therefore its operating has to be explained in separated steps. First, the interaction function, as before, checks the type of the event and then proceed to extract the line number which is a key information for the user interface. Then for each line, the interpreted objects have to be caught. This is handled by a external function called \texttt{\_filter\_locals} and called with the frame locals in option.
+The succeeding event type is the the \texttt{line} type which occurs at each line-break. This event is vital for the data collection and therefore its operating has to be explained separately. First, the interaction function, as before, checks the type of the event and then proceeds to extract the line number which is a key information for the user interface. Then for each line, the interpreted objects have to be caught. This is handled by a external function called \texttt{\_filter\_locals} and called with the frame locals as an argument.
 \begin{python}
 locals = self._filter_locals(frame.f_locals)
 \end{python}
 
-The function itself create first an empty dictionary which will store the name and the value of each local (line 2). The locals starting with a double underscore are ignored and only the specified object are fetched (line 4 to 6). The function returns the \texttt{new\_locals} dictionary to the main \texttt{interaction} function (line 9).
+The function itself first creates an empty dictionary which will store the name and the value of each local variable (line 2). The locals starting with a double underscore are ignored and only the specified objects are fetched (line 4 to 6). The function returns the \texttt{new\_locals} dictionary to the main \texttt{interaction} function (line 9).
 
 \begin{python}
 def _filter_locals(self, local_vars):
@@ -123,7 +123,7 @@ def _filter_locals(self, local_vars):
 
 \end{python}
 
-Then, the locals are stored in a JSON defaultdict object along with the file name, the frame and the line number. At the end, the JSON dictionary is periodically stored in the database in order to flush the data from the memory and enhance the runtime performances. The population of the database is detailed in the next point.
+Then, the locals are stored in a JSON defaultdict object along with the file name, the frame and the line number. At the end, the JSON dictionary is periodically stored in the database in order to flush the data from the memory and enhance the runtime performance. The population of the database is detailed in the next section.
 
 \begin{python}
 if self.total_linenb > self.next_backup:
@@ -131,7 +131,7 @@ if self.total_linenb > self.next_backup:
     self.next_backup += self.next_backup
 \end{python}
 
-The handling of the \texttt{line} event is now finished and interaction function continues with the two last types. The \texttt{return} event only occurs at the beginning of a file for which we just set the main frame name (line 2) and the \texttt{exception} event happens when there is an error in the code which is printed out in the console (line 6).
+The handling of the \texttt{line} event is now finished and the interaction function continues with the two last types. The \texttt{return} event only occurs at the beginning of a file for which we just set the main frame name (line 2) and the \texttt{exception} event happens when there is an error in the code which is printed out in the console (line 6).
 \begin{python}
 if event == 'return':
     self.cur_framename = '<module>'
@@ -165,9 +165,9 @@ def set_quit(self):
 The data model is an in-between layer used for the Data capture model and the user interface. Both modules parts will be explained in this section along with the presentation of the data model itself.
 
 \subsection{Definition}
-The data model itself evolved a lot during the development and lead to the finale state which will be presented here. This can be observed in the chosen nomenclature, which sometimes does not exactly correspond to the reality. The best example is the use of the substantive "file" in the code which actually describes more an analysis instance or a run than the file itself. Thanks to the MongoDB database engine, it is easy to modify the document structure without any database manipulation in opposition with the data structure of relational database systems. This was a great asset which allowed tremendous saving time in the development of the data model since it changed a significant number of times.
+The data model itself evolved a lot during the development and lead to the finale state which will be presented here. This can be observed in the chosen nomenclature, which sometimes does not exactly correspond to the reality. The best example is the use of the substantive "file" in the code which actually describes more an analysis instance or a run than the file itself. Thanks to the MongoDB database engine, it is easy to modify the document structure without any database manipulation in contrary to the data structure of relational database systems. This was a great asset which allowed significant time savings in the development of the data model since it changed a many times.
 
-To understand the data model it is a good reminder to enumerate what the data capture model is actually capturing. First the model is searching for objects, i.e. integer, string, float variables, and their values. These objects are linked with line number, which are them-self linked with frames. Finally, each frame is owned by a file (or more specifically a run as it was pointed out previously).
+To understand the data model it is a good reminder to enumerate what the data capture model is actually capturing. First the model is searching for objects, i.e. integers, strings and floats variables including for each type their values. These objects are linked with line numbers, which are them-self linked with frames. Finally, each frame is owned by a file (or more specifically a run as it was pointed out previously).
 
 Keeping that in mind the different data structures can be considered as documents and defined the following way in Python. This notation is used further for reading from the database. First, the \textit{line} which has a number and some data (objects):
 \begin{python}
@@ -184,7 +184,7 @@ class Frame(EmbeddedDocument):
     lines = ListField(EmbeddedDocumentField(Line))
 \end{python}
 
-Finally, the \textit{file} which has a name, a time-stamp, the content itself (source code) and additionally a revision number gathered from the git repository when available and also the user name of the person who started the analysis. The file contains logically the different frames and the whole is defined this way :
+Finally, the \textit{file} which has a name, a time-stamp, the content itself (source code) and additionally a revision number gathered from the git repository when available and also the user name of the person who started the analysis. The file contains logically the different frames and is defined in the following way :
 \begin{python}
 class File(Document):
     user = StringField()
@@ -196,10 +196,10 @@ class File(Document):
 \end{python}
 
 \subsection{Writing to the database}
-This part of the database handling is directly implemented in the data capture model along with the capture functionality. The process can be called in two different states of the analyzing phase : 
+This part of the database handling is directly implemented in the data capture model along with the capture functionality. The process can be called in two different states of the analysis phase : 
 \begin{itemize}
-  \item The program reached the limit of lines and need to flush the gathered data into the database. This occurs inside of the \pythoninline{interaction()} function which has already been described in the previous section
-  \item The system reached the end of the targeted software and the function \pythoninline{set\_quit()} has been called.
+  \item The program reached the limit of lines and needs to flush the gathered data into the database. This occurs inside the \pythoninline{interaction()} function which has already been described in the previous section
+  \item The system reached the end of the analysed file and the function \pythoninline{set\_quit()} has been called.
 \end{itemize}
 Both states induce the call of the \pythoninline{\_populate\_db()} which is constituted of an \pythoninline{if...else} condition. This condition checks whenever it is the first time the system tries to backup the data or not and calls respectively the \pythoninline{\_create\_new\_file()} or the \pythoninline{\_update\_file()} functions (line 3 and 6).
 \begin{python}
@@ -212,21 +212,22 @@ def _populate_db(self):
         self._clear_cache()
 \end{python}
 
-If the system needs to create a new document in the database, as already stated it will call the \pythoninline{\_create\_new\_file()} which is explained here in a simplified and step-by-step version. The complete version of the function includes also a compatibility layer for Python 2 but has been removed here for readability reasons. The first step of the creation of a new entry is to fetch each row of the JSON type dictionary (line 2) where the data has been stored until now and store the data in two separate variables (\pythoninline{module\_file} and \pythoninline{frames}).
+If the system needs to create a new document in the database, as already stated it will call the \pythoninline{\_create\_new\_file()} which is explained here in a simplified and step-by-step version. The complete version of the function includes also a compatibility layer for Python 2 but we removed it here for readability reasons. The first step of the creation of a new entry is to fetch each row of the JSON type dictionary (line 2), where the system stored the data  until now, and split the data in two separate variables (\pythoninline{module\_file} and \pythoninline{frames}).
 \begin{python}
 def _create_new_file(self):
   for module_file, frames in self.json_results.items():
 \end{python}
  
-Then, in order to display also the source code in the user interface, the content of the file retrieved (line 1-3) and as all the needed information are already there, the file document type can be created (line 4). The \pythoninline{user} and the \pythoninline{revision} variables are gathered from two functions which retrieve the git repository information, but will not be explained in this report.
+Then, in order to display also the source code in the user interface, we retrieve the content of the file (line 1-3). Finally, we gather the \pythoninline{user} and the \pythoninline{revision} variables with the git command line tool and create the file object in the database (line 4).
 \begin{python}
 file = open(module_file, 'r')
 file_content = file.read()
 file.close()
+
 item = File(user=self._get_git_username(), revision=self._get_git_revision_short_hash(), filename=module_file, timestamp=datetime.now(), content=file_content)
 \end{python}
 
-The next step is to create the \pythoninline{frame} document (line 2) along side with each \pythoninline{line} document belonging to this frame (line 4). Finally, the frame is linked to the file (line 6) and the file can be saved into the database (line 7). Additionally the variable \pythoninline{file\_id}, which was previously defined, is set.
+The next step is to create the \pythoninline{frame} document (line 2) along side with each \pythoninline{line} document belonging to this frame (line 4). Finally, we link the frame to the file (line 6) and save the file into the database (line 7). Additionally the variable \pythoninline{file\_id}, which was previously defined, is set.
 \begin{python}
 for name, lines in sorted(frames.items()):
     frame = Frame(name=name)
@@ -238,13 +239,13 @@ for name, lines in sorted(frames.items()):
 self.file_id = item.id
 \end{python}
 
-Now that a first backup has been created in the database for our run, the system will probably have to update the database with the following analyzed lines . With this end in mind, the \pythoninline{\_update\_file()} has been implemented and is presented the same way as the foregoing function. First, as in the previous function the JSON dictionary is looped in order to gather the needed data.
+Now that we created a first backup in the database for our run, the system will eventually have to update the database with the following analysed lines and therefore it will call again the \pythoninline{_populate_db()} function. This time, because the system set the \textit{file\_id} variable just before, the \pythoninline{\_update\_file()} function is called. We implemented this function in a similar way as the \pythoninline{\_create\_new\_file()} one. First, as in the earlier function the JSON dictionary is looped in order to gather the needed data.
 \begin{python}
 def _update_file(self):
   for module_file, frames in self.json_results.items():
 \end{python}
 
-Then for each frame, the system first checks if it is a new frame or not (line 2) and hence creates it in the database (line 3-4). Finally the new analyzed lines are created and saved in the database (line 5-7).
+Then for each frame, the system first checks if it is a new frame or not (line 2) and hence creates it in the database (line 3-4). Finally, we create the new analysed lines and save them in the database (line 5-7).
 \begin{python}
 for name, lines in sorted(frames.items()):
     if not File.objects(id=self.file_id, frames__name=name):
@@ -257,25 +258,25 @@ for name, lines in sorted(frames.items()):
 
 \subsection{Reading from the database}
 
-Reading from the database exclusively arises in the user interface module. In order to cut down the procedure, the \textit{MongoEngine} library has been chosen. The MongoEngine is a Document-Object Mapper for working with MongoDB from Python. Thanks to the use of this library, it is possible to gather the data of a run in the database only with one line of code.
+Reading from the database exclusively arises in the user interface module. In standardise the procedure, we chose to use the \textit{MongoEngine} library. The MongoEngine is a Document-Object Mapper for working with MongoDB in Python. Thanks to the use of this library, it is possible to gather the data of a run in the database only with one line of code.
 \begin{python}
 file_object = File.objects(id=file_id)
 \end{python} 
 
-This line of code gathers the complete data of a run, but thanks to the API of MongoEngine it is also possible to retrieve specifically the needed data. If this special options are in the interest of the reader, we suggest to refer directly to the MongoEngine documentation.
+This line of code gathers the complete data of a run, but thanks to the API of MongoEngine it is also possible to retrieve specifically the needed data. If these special options are in the interest of the reader, we suggest to refer directly to the MongoEngine documentation.
 
 \section{User interface}
-The user interface is a web application which helps the programmer to review the result of the data capture model. In this section, the focus will be made on the features rather than on the code for different reasons. First, the user interface code is not considered here as the core knowledge of the developed system. Then the complete web application represents almost 1000 lines of code and would stretch considerably out this report with few added value. Finally a non negligible part of the code fulfils a visual and presentation purpose rather than actual features.
+The user interface is a web application which helps the programmer to review the result of the data capture model. In this section,  we decided to focus on the features rather than on the code for different reasons. First, we do not consider the user interface code here as the core knowledge of the developed system. Then the complete web application represents almost 1000 lines of code and would stretch considerably out this report with few added value. Finally a non negligible part of the code fulfils a visual and presentation purpose rather than actual features.
 
 \subsection{Technologies}
 The web application is based on the Python web framework \textit{Flask} which is intended to be as lightweight as possible. The flask micro-framework comes with some handy features such as built-in development server and debugger, integrated unit testing support, RESTful request dispatching, or \textit{Jinja2} templating. Flask is normally designed to connect with standard SQL databases but with the help of the \textit{flask-mongoengine} extension the process is pretty straightforward.
 
 The shaping of the web-application is indeed done with the help of \textit{HTML/CSS} and \textit{Javascript}. For purposes of standardization, the \textit{Bootstrap} framework came in help which includes also the convenient \textit{JQuery} javascript framework. Bootstrap is a popular HTML, CSS, and JS open-source framework for developing front-end projects on the web. As for Jquery it is a fast, small, and feature-rich JavaScript library which makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
-Some other libraries came also during the development to format the data out of the database. With this aim in mind, the first used library was DataTables which makes formatting data in table a child's play. Additionally the \textit{Highcharts} Javascript library is used to generate every graphs and \textit{pygments} helps for highlighting the Python syntax.
+Some other libraries came also during the development to format the data out of the database. With this aim in mind, we first used the DataTables library which makes formatting data in table a child's play. Additionally we are using the \textit{Highcharts} Javascript library to generate every graphs and \textit{pygments} to highlighting the Python syntax.
 
 \subsection{The cockpit}
-The user interface is composed of three main pages. The first one, represented by the \autoref{fig:home}, is the index page which simply proposes an overview of the different runs stored in the database. This page also acts as a cockpit which allows the user to view runs in detail, select runs for comparison and to delete unwanted runs from the database. The runs are searchable and can be sorted by dates, file name, Git revision or user name. It is also possible for the user to configure how many runs should be shown per page.
+The user interface is composed of three main pages. The first one, represented by the \autoref{fig:home}, is the index page which shows an overview of the different runs stored in the database. This page also acts as a cockpit which allows the user to view runs in detail, select runs for comparison and to delete unwanted runs from the database. The runs are searchable and can be sorted by dates, file name, Git revision or user name. It is also possible for the user to configure how many runs should be shown per page.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{figures/yoda-home.png}
@@ -284,7 +285,7 @@ The user interface is composed of three main pages. The first one, represented b
 \end{figure}
 
 \subsection{The file reviewer}
-Once the user selected a run in the cockpit, he will be directly redirected to a reviewing page as illustrated by the \autoref{fig:viewafile}. 
+Once the user selected a run in the cockpit, he will be directly redirected to a the corresponding results page as illustrated by the \autoref{fig:viewafile}. 
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{figures/yoda-file.png}
@@ -292,9 +293,9 @@ Once the user selected a run in the cockpit, he will be directly redirected to a
     \label{fig:viewafile}
 \end{figure}
 
-This page is separated in 4 main sections. First, at the head of the page the user gets some basic information about the run such as the file name, the date of the run or the git revision. Directly underneath, when possible, a plot graph is computed and shows by default all the available objects. The user can directly from the graph choose to hide some variable and the scope of the graph is automatically adapted to the remaining values. Additionally, the chart can also be printed and exported in several differents formats.
+This page is separated in 4 main sections. First, at the head of the page there is some basic information about the run such as the file name, the date of the run or the git revision. Directly underneath, when possible, a plot graph is computed and shows by default all the available objects. The user can choose to hide some variable and the scope of the graph is automatically adapted to the remaining values. Additionally, the chart can also be printed and exported in several different formats.
 
-A bit further, separated in two vertical columns, the user will find in the left part the complete source code of the analyzed file. The pieces of code which were genuinely analyzed are highlighted in a light yellow color and moreover every line has been numbered and syntactically colored. The line numbers are clickable and open a panel in the right column with some further information about the analyzed objects. Each panel contains a header with the frames name and the line number, and a body with the objects names, their values and a small inline graph resuming the evolution of the value. The \autoref{fig:filefocus} shows in detail these described features. Additionally on the top of the right column some buttons allow to show all the panel, close them or selectively open all panels linked to a frame.
+Next, in two vertical columns, the user will find in the left part the complete source code of the analyzed file. The pieces of code which were genuinely analyzed are highlighted in a light yellow color and moreover every line has been numbered and syntactically colored. The line numbers are clickable and open a panel in the right column with some further information about the analyzed objects. Each panel contains a header with the frame name and the line number, and a body with the objects names, their values and a small inline graph representing the evolution of the value. The \autoref{fig:filefocus} shows in detail these described features. Additionally on the top of the right column some buttons allow to show all the panels, close them or selectively open all panels linked to a frame.
 
 \begin{figure}[h!]
   \centering
@@ -304,7 +305,7 @@ A bit further, separated in two vertical columns, the user will find in the left
 \end{figure}
 
 \subsection{File comparison}
-If needed the user has also the possibility to select several files in the cockpit in order to compare them. This is done by checking the needed runs and clicking the "compare" link at the bottom of the page. Doing so will redirect the user on the start page of the comparison. From this page, each file can be inspected and the user is given the choice of which object he wants to select for the comparison as shown on the \autoref{fig:comparisonstart}.
+If needed the user has also the possibility to select several files in the cockpit in order to compare them. This is done by checking the needed runs and clicking the "compare" link at the bottom of the page. Doing so will redirect the user to the start page of the comparison. From this page, each file can be inspected and the user is given the choice of which object he wants to select for the comparison as shown on the \autoref{fig:comparisonstart}.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{figures/yoda-comparison.png}
@@ -312,7 +313,7 @@ If needed the user has also the possibility to select several files in the cockp
     \label{fig:comparisonstart}
 \end{figure}
 
-For each selected object, the user has the possibility to see the source file or eventually to deselect it. When he is happy with his selection, graphs can be generated with the triggering of the "Generate graphs" button. For each run a graph will be created an disposed in a way which facilitates comparison as shown on \autoref{fig:generatedgraphs}.
+For each selected object, the user has the possibility to see the source file or eventually to deselect it. When he is happy with his selection, graphs can be generated with the triggering of the "Generate graphs" button. For each run a graph will be created and displayed in a way which facilitates comparison as shown on \autoref{fig:generatedgraphs}.
 \begin{figure}[h!]
   \centering
     \includegraphics[width=\textwidth]{figures/yoda-graphs.png}
@@ -321,4 +322,4 @@ For each selected object, the user has the possibility to see the source file or
 \end{figure}
 
 \section{Concluding remarks}
-In this chapter, we tried to give a brief but complete insight of the implementation of our solution. It was quite a challenge to summary 6 months of development, over 2000 lines of code (around 32'000 with all libraries included !) in a short and comprehensive chapter. The use of Python was a new challenge for us as we were more used to develop in PHP for this kind of application and therefore we had to learn to know and use all the different libraries. The choice of MongoDB was also a discovery as we were more used to work with relation databases. We hope we were able to give the reader a good insight of operating method of our developed system. In the next chapter, we are giving a complete guide to install and start the system.
+In this chapter, we gave a brief but complete insight of the implementation of our solution. It was quite a challenge to summary 6 months of development, over 2000 lines of code in a short and comprehensive chapter. The use of Python was a new challenge for me as I was more used to develop in PHP for this kind of application and therefore we had to learn to know and use all the different libraries. The choice of MongoDB was also a discovery as I was more used to work with relation databases. We hope we were able to give the reader a good insight of operating method of our developed system. In the next chapter, we are giving a complete guide to install and start the system.
