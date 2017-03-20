@@ -10,15 +10,15 @@
 \end{flushright}
 
 
-Because the installation guide is often left out in academic works, we want to dedicate a special chapter to the process. Here the reader will be able to learn how to deploy the system on his own machine by first configuring his environment and then deploy the application by the installation of the provided package or by doing a compilation from the source code.
+Because the installation guide is often left out in academic works, we want to dedicate a special chapter to the process. Here the reader will be able to learn how to deploy the system on his own machine by first configuring his environment and then deploy the application by installing of the provided packages or by compiling from the source code.
 
 \section {Setting up the environment}
 
-In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool might work under Windows or MacOS as the used libraries should all be cross-platform, but the software has never been tested under these platforms. For those who might not want to switch to a native GNU/Linux system it is needless to say that it will also work in a virtual machine. As it was used during the development and the testing phases we strongly recommend a Fedora distribution and therefore this guide is based on this distribution commands.
+In order to use the developed tool, it is highly recommended to install it on a system providing a GNU/Linux distribution. The tool should work under Windows or MacOS as the used libraries are all cross-platform, but the software has not been tested under these platforms. For those who might not want to switch to a native GNU/Linux system it is needless to say that it will also work in a virtual machine. As it was used during the development and the testing phases we strongly recommend a Fedora distribution and therefore this guide is based on this distribution's commands.
 
 \subsection{Python installation}
 
-As the main used language is Python and more specifically the third version of it, the first step is to verify its installation and in case it would not be present install the needed packages by using the following command :
+As the main used language is Python and more specifically Python 3, the first step is to verify its installation and in case it would not be present install the needed packages by using the following command :
 \begin{lstlisting}[language=bash]
 sudo dnf install python3 python3-pip
 \end{lstlisting}
@@ -36,12 +36,13 @@ enabled=1
 gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
 \end{lstlisting}
 
-Then the latest stable package (currently version 3.2.11) can be installed with the dnf package manager and then directly launch by the following command. In case of installation problems we ask the reader to refer to the official documentation.
+Then the latest stable package (currently version 3.2.11) can be installed with the dnf package manager and then directly launched with the following command : 
 \smallskip
 \begin{lstlisting}[language=bash]
 sudo dnf install mongodb-org
 sudo service mongod start
 \end{lstlisting}
+In case of installation problems we ask the reader to refer to the official documentation.
 
 \subsection{Setting up a virtual environment}
 
@@ -67,13 +68,13 @@ More information about using a virtual environment is available online. \citep{v
 
 \section{Installation}
 \subsection{Package installation}
-In order to simplify the installation process, a packaged version has been built and is ready to be downloaded from the projects \href{https://github.com/dchenaux/Yoda}{GitHub page}. The installation process is straightforward since it is a \gls{pip} package. Assuming the reader followed the instruction in the past section, the following command will install the package and its required dependencies. 
+In order to simplify the installation process, we build a packaged version of our system and it is ready to be downloaded from the projects \href{https://github.com/dchenaux/Yoda}{GitHub page}. The installation process is straightforward since it is a \gls{pip} package. Assuming the reader followed the instruction in the past section, the following command will install the package and its required dependencies. 
 \smallskip
 \begin{lstlisting}[language=bash]
 pip install yoda-1.0.tar.gz
 \end{lstlisting}
 
-The installated files are now located in \texttt{venv/lib/python3.5/site-packages/yoda/}.
+The installed files are now located in \texttt{venv/lib/python3.5/site-packages/yoda/}.
 
 \subsection{Package creation}
 In case the reader wishes to do some modification of the system and wants to create a new packaged version, we created a \texttt{setup.py} file which allows easy package creation
@@ -92,7 +93,7 @@ python venv/lib/python3.5/site-packages/yoda/web_exec.py
 \end{lstlisting}
 The user interface should be now locally accessible in any browser at the \url{http://127.0.0.1:80} address.
 
-To try a first analysis we recommend the user to download the sample script also available on the GitHub repository and simply launch it from the command line.
+To try a first analysis we recommend the user to download the sample script which is also available on the GitHub repository and launch it from the command line.
 
 \section{Concluding remarks}
-To conclude the installation guide, we wanted to point out that only the most basic setup was explained here. Indeed, thanks to the use of the flask framework a lot of power user configuration is possible, such as running the user interface through a different port, make the interface accessible from other machines, deploy it on many popular web-servers. In the next chapter, some experiments are done to measure the performance of the whole system.
+To conclude the installation guide, we wanted to point out that only the basic setup was explained here. Indeed, thanks to the use of the flask framework a lot of power user configuration is possible, such as running the user interface through a different port, making the interface accessible from other machines, deploying it on many popular web-servers. In the next chapter, we evaluate the performance of the whole system.
