@@ -143,7 +143,7 @@
 \newcommand*{\FACULTY}[1]{\def\FACNAME{#1}}
 \newcommand*{\subject}[1]{\def\subjectname{#1}}
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
-\supervisor  {Prof. Dr. Philippe Cudr\'e-Mauroux and Roman Prokofyev}
+\supervisor  {Prof. Dr. Philippe Cudr\'e-Mauroux and Dr. Roman Prokofyev}
 \examiner    {}
 \degree      {Master of Science in Computer Science}
 \authors     {}
