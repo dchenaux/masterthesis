@@ -145,7 +145,7 @@
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 \supervisor  {Prof. Dr. Philippe Cudr\'e-Mauroux and Dr. Roman Prokofyev}
 \examiner    {}
-\degree      {Master of Science in Computer Science}
+\degree      {Master in Information Management}
 \authors     {}
 \universitylogo  {\includegraphics[width=200pt]{figures/unifr.pdf}}
 \university  {\texorpdfstring{\href{http://www.unifr.ch}
@@ -166,10 +166,10 @@
 \GROUP       {\texorpdfstring{\href{https://exascale.info/}
                 {EXASCALE INFOLAB}}
                 {EXASCALE INFOLAB}}
-\faculty     {\texorpdfstring{\href{http://www.unifr.ch/science/}
+\faculty     {\texorpdfstring{\href{http://www.unifr.ch/ses/}
+                {Faculty of Economics and Social Sciences}}
                 {Faculty of Science}}
-                {Faculty of Science}}
-\FACULTY     {\texorpdfstring{\href{http://www.unifr.ch/science/}
+\FACULTY     {\texorpdfstring{\href{http://www.unifr.ch/ses/}
 				{FACULTY OF SCIENCE}}
 				{FACULTY OF SCIENCE}}
 \addresses   {}
