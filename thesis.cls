@@ -145,7 +145,7 @@
 \newcommand*{\keywords}[1]{\def\keywordnames{#1}}
 \supervisor  {Prof. Dr. Philippe Cudr\'e-Mauroux and Dr. Roman Prokofyev}
 \examiner    {}
-\degree      {Master in Information Management}
+\degree      {Master of Arts in Information Management}
 \authors     {}
 \universitylogo  {\includegraphics[width=200pt]{figures/unifr.pdf}}
 \university  {\texorpdfstring{\href{http://www.unifr.ch}
